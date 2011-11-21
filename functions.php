@@ -81,6 +81,10 @@ function addUser($user) {
     }
 }
 
+function closeSidebar() {
+    echo "\n</div>\n";
+}
+
 ?>
 
 

@@ -1,9 +1,9 @@
 TODO list for the site:
 
-0. Create geolocatioon system
-1. Create HTML to display results of back end code
+0. Create geolocatioon system - done
+1. Create HTML to display results of back end code - in progress
 2. Analyze code for scalability
-3. Rid the code of all syntax errors
+3. Rid the code of all syntax errors - in progress
 4. Make a algorithm to rank deals based on votes, user status, and comment analysis
 5. Make algorithm to rank comments, to help give better data to DealRank algorithm
 6. Create an auction based advertising platform for brands to promote deals posted about them my them or someone else
