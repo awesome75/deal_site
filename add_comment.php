@@ -23,7 +23,7 @@ $comment -> thumbs_down = $thumbs_down;
 $comment -> post_date = null; // sql will handle this
 $comment -> algo_ranking = 0; // not implemented yet
 // now we have our comment object, let's add it to the database
-$con = getSQLConnection('deals_site');
+$con = getSQLConnection('deal_site');
 $result = addDealComment($comment); // call the add deal function
 return $result; // return result to calling script
 // clean up, close SQL connection
