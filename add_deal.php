@@ -39,7 +39,7 @@ $deal -> algo_ranking = $algo_ranking; // null for now, no algorithm yet
 $deal -> thanks_count = $thanks_count; // should be 0
 // now we have the deal object, pass it to the insert function
 // get our SQL connection
-$con = getSQLConnection('deals_site');
+$con = getSQLConnection('deal_site');
 $result = addDeal($deal); // takes a deal object 
 return $result; // return the result of the operation to the script that requested it
 // clean up
