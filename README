@@ -3,7 +3,7 @@ When pushing new changes to the site, make sure to plug in a few values that can
 
 1. Enter the SQL credentials for the DB in functions.php
 2. Check your include paths on the scripts, they may or may not work with your settings
-3. Perhaps most important, none of this code has been executed. There are syntax errors and incomplete things. Watch for them
+3. Perhaps most important, only some of this code has been executed. There are syntax errors and incomplete things. Watch for them
 and make sure they are fixed for production, word. (this will be fixed when git and my server are back up)
 4. Number 3, again.
 5. Code is public, whatever. I am including a GPLv3 with this though, so if you use this code be ready to share the 
