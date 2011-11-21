@@ -1,3 +1,4 @@
+<?
 // deals site classes.php
 // various classes we need should go here
 // make sure functions are available
@@ -119,7 +120,7 @@ class user {
     
 }
 
-
+?>
 
 
 
