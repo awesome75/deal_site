@@ -1,0 +1,14 @@
+TODO list for the site:
+
+0. Create geolocatioon system
+1. Create HTML to display results of back end code
+2. Analyze code for scalability
+3. Rid the code of all syntax errors
+4. Make a algorithm to rank deals based on votes, user status, and comment analysis
+5. Make algorithm to rank comments, to help give better data to DealRank algorithm
+6. Create an auction based advertising platform for brands to promote deals posted about them my them or someone else
+and to allow them to create ads and have real time bidding and stats to analyze their campaigns
+7. Create mobile site and apps
+8. Transition to new record system, we will be leaving MySQL in favor of a NoSQL solution, probably Cassandra
+9. At some point in the future rewrite the site in Python instead of PHP. Probably make a new project here on c9 for that affter
+this PHP version hits production status

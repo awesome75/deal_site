@@ -1,0 +1,190 @@
+<html>
+<head>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    font: 16px Arial, Verdana, sans-serif;
+    color: #222;
+}
+
+#main {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 15px;
+    height: 90%;
+    //text-align: center;
+}
+
+#logo {
+    text-align: left;
+    width: 100%;
+    /* background: #ABDB6C; */
+    background: #aad874;
+    height: 70px;
+    -webkit-box-shadow: 0 0 5px 3px #888;
+}
+
+#left_sidebar {
+    width: 19%;
+    text-align: left;
+    height: auto;
+    background: #DFEEE0;
+    display: inline-block;
+    float: left;
+    border-radius: 15px;
+    padding: 5px 0 25px 10px;
+    font-weight: bold;
+    -webkit-box-shadow: 0 0 5px 3px #888;
+}
+
+#left_sidebar input,select {
+    margin-top: 3px;
+    width: 85%;
+    color: #448754;
+    font-weight: bold;
+    //border: 1px solid #284F31;
+    border: 1px solid #4B945C;
+    border-radius: 7px;
+}
+
+#left_sidebar h2 {
+    font-size: 16px;
+}
+
+#deals_container {
+    width: 64%;
+    height: 500px;
+    text-align: left;
+    display: inline-block;
+}
+
+#sidebar_right {
+    width: 15%;
+    height: 500px;
+    text-align: left;
+    display: inline-block;
+    border: 1px solid green;
+    float: right;
+}
+
+h1,h2,h3 {
+    color: #31270E;
+    font-size: 2.5em;
+}
+
+#navbar {
+    //color #24472C;
+    color: #284F31;
+    margin: 40px 15% 0px 0px;
+    font-size: 20px;
+    float: right;
+    height: auto;
+}
+
+#navbar span {
+    margin-right: 15px;
+}
+
+.filters {
+    margin: 10px 0 0 10px;
+    color: #284F31;
+}
+
+#add_deal {
+    border: 2px solid #284F31;
+    border-radius: 5px;
+    background: #aad874;
+    margin: 0 50px 0 0;
+    padding: 0 0px 0 0;
+    width: 45px;
+    height: 35px;
+    float: right;
+    text-align: center;
+    line-height: 35px;
+    font-size: 40px;
+}
+
+.deal {
+    display: inline-block;
+    padding: 10px 10px 10px 20px;
+    text-align: justify;
+    margin: 0;
+    float: left;
+}
+</style>
+</head>
+<body>
+<div id="logo">
+    <!-- start the navbar -->
+    <div id="navbar">
+        <span>Home</span>
+        <span>My Profile</span>
+        <span>Settings</span>
+        <span>Logout</span>
+    </div>
+    <!-- end of the navbar -->
+    <!-- logo etc -->
+    <h1 style="padding:25px 0 0 10%;">name/logo</h1>
+</div>
+<!-- logo div ends start page -->
+<div id="main">
+     <div id="sidebar_right">
+        sidebar right
+        <br /><br />
+        (won't have a border, just for reference)
+    </div>
+    <!-- end of right sidebar -->
+    <!-- begin three column layout -->
+    <div id="left_sidebar">
+        <div class="filters">
+            <span>Location:</span><br />
+            <input type="text" name="location" />
+        </div>
+        <div class="filters">
+            <span>Company:</span><br />
+            <input type="text" name="company" />
+        </div>
+        <div class="filters">
+            <span>Price:</span></br />
+            <select name="price">
+                <option>Select Price</option>
+            </select>
+        </div>
+        <div class="filters">
+            <span>Type:</span><br />
+            <input type="text" name="type" />
+        </div>
+        <div class="filters" style="text-align: center; width:85%;">
+            <input type="submit" value="Go" style="width: 40%;" />
+        </div>
+    </div>
+    <!-- end of left sidebar -->
+    <div id="deals_container">
+        <div id="add_deal">
+            +
+        </div>
+    <!-- begin deals -->
+    <h1 style="margin-top: 8px; display:inline-block;margin-left: 25px;">deals</h1>
+    <div class="deal">
+       <script>
+            for (var i = 0; i < 100; i++) {
+                document.write('website content. hello world. blah. ');
+            }
+        </script>
+    </div>
+    <!-- end of the deals container -->
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
