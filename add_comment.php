@@ -1,10 +1,14 @@
+<?
 // add_comment.php for deals site
 // this script will take a comment from the user in POST vars ans insert it into the DB
 require_once('functions.php');
 require_once('classes.php');
 // we need a deal ID to be defined here
+/*
 preg_match("([\d]+)", $_GET['deal_id'], $deal_id);
 $deal_id = $deal_id[0];
+*/
+$deal_id = 1; // hardcoded deal id for testing
 // now that is done we can move on to collecting and sanitizing the comment contents from POST
 $poster_id = $_POST['poster_id'];
 $title = $_POST['title'];
@@ -28,3 +32,4 @@ $result = addDealComment($comment); // call the add deal function
 return $result; // return result to calling script
 // clean up, close SQL connection
 mysql_close($con);
+?>

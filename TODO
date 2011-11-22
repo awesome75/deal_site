@@ -12,3 +12,4 @@ and to allow them to create ads and have real time bidding and stats to analyze 
 8. Transition to new record system, we will be leaving MySQL in favor of a NoSQL solution, probably Cassandra
 9. At some point in the future rewrite the site in Python instead of PHP. Probably make a new project here on c9 for that affter
 this PHP version hits production status
+10. Many scripts that would rely on a user/deal ID etc are hardcoded right now for testing, make dynamic
