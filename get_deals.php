@@ -21,15 +21,17 @@ while ($row = mysql_fetch_array($res)) {
     $current -> deal_post_date = $row['deal_post_date'];
     $current -> deal_end_date = $row['deal_end_date'];
     $current -> deal_text = $row['deal_text'];
-    $current -> deal_location = $row['deal_location'];
+    $current -> deal_latitude = $row['deal_latitude'];
+    $current -> deal_longitude = $row['deal_longitude'];
     $current -> deal_photo = $row['deal_photo'];
-    $current -> tags = $row['tags'];
-    $current -> views = $row['views'];
-    $current -> thumbs_up = $row['thumbs_up'];
-    $current -> thumbs_down = $row['thumbs_down'];
-    $current -> verified_deal = $row['verified_deal'];
-    $current -> algo_ranking = $row['algo_ranking'];
+    $current -> tags = $row['deal_tags'];
+    $current -> views = $row['deal_views'];
+    $current -> thumbs_up = $row['deal_thumbs_up'];
+    $current -> thumbs_down = $row['deal_thumbs_down'];
+    $current -> verified_deal = $row['deal_verified'];
+    $current -> algo_rank = $row['algo_ranking'];
     $current -> thanks_count = $row['thanks_count'];
+    $current -> active = $row['deal_active'];
     // now that the deal object is done store a reference
     $deals[$ctrl] = $current;
     // increment index and continue

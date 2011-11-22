@@ -14,15 +14,17 @@ class deal {
     var $deal_post_date;
     var $deal_end_date;
     var $deal_text;
-    var $deal_location;
+    var $deal_latitude;
+    var $deal_longitude;
     var $deal_photo;
     var $tags;
     var $views;
     var $thumbs_up;
     var $thumbs_down;
     var $verified_deal;
-    var $algo_ranking;
+    var $algo_rank;
     var $thanks_count;
+    var $active;
     // that is all the properties we will need.. FOR NOW!!!
     // now we need to define the methods IE what the deal object is capable of
     
@@ -46,7 +48,8 @@ class deal_comment {
     var $thumbs_up;
     var $thumbs_down;
     var $post_date;
-    var $algo_ranking; // will probably not be implemented for quite some time 
+    var $algo_rank; // will probably not be implemented for quite some time 
+    var $active;
     // various object methods for comments will be below
 }
 
