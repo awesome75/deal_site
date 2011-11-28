@@ -119,8 +119,16 @@ class user {
         // close the connection and return the result
         mysql_close();
         return $res;
-    }    
-    
+    }        
+}
+
+class company {
+    var $id;
+    var $name;
+    var $rating;
+    var $about;
+    var $thumbs_up;
+    var $thumbs_down;
 }
 
 ?>

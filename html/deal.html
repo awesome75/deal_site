@@ -1,13 +1,20 @@
-<div class="deal">
-	<span class="deal_title"><? echo $deal -> deal_title; ?></span>
-	<br />
-	<div class="deal_info">
-		<?
-			// we need the name of the poster that added this deal
-			getUser($deal -> poster_id);
-		<?
+<?
+// go through the deals and display them all pretty like
+foreach ($deals as $deal) {
+?>
+	<div class="deal">
+		<span class="deal_title"><? echo $deal -> deal_title; ?></span>
+		<br />
+		<div class="deal_info">
+			<?
+				// we need the name of the poster that added this deal
+				getUser($deal -> poster_id);
+			?>
+	
+		</div>
+
 
 	</div>
-
-
-</div>
+<?
+}
+?>
