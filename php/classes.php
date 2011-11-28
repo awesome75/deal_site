@@ -123,12 +123,26 @@ class user {
 }
 
 class company {
+    // the company object stores company information for scripts
     var $id;
     var $name;
     var $rating;
     var $about;
     var $thumbs_up;
     var $thumbs_down;
+}
+
+class venue {
+    // the venue object stores venue information for scripts
+    var $id;
+    var $name;
+    var $company_id;
+    var $latitude;
+    var $longitude;
+    var $about;
+    var $rating;
+    var $thumbs_up;
+    var thumbs_down;
 }
 
 ?>
