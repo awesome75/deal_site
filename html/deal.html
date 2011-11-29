@@ -8,7 +8,7 @@ foreach ($deals as $deal) {
 		<div class="deal_info">
 			<?
 				// we need the name of the poster that added this deal
-				getUser($deal -> poster_id);
+				$user = getUser($deal -> deal_poster_id); // user is now an object with all usual user properties and methods
 			?>
 	
 		</div>

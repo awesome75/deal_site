@@ -142,7 +142,7 @@ class venue {
     var $about;
     var $rating;
     var $thumbs_up;
-    var thumbs_down;
+    var $thumbs_down;
 }
 
 ?>
