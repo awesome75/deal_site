@@ -22,7 +22,7 @@ class locationTools:
         page = urllib.urlopen(url);
         result = page.read();
         page.close(); # close our page handle
-        return result;
+        return result; # no need to parse results, they are returned in an easy to explode() format
 
 
     def getNearby(self, location, radius=500, sensor="false", keyword="", name="", qtype=""):
