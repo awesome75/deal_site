@@ -71,6 +71,9 @@ def main ():
     elif (argv[1] == "getnearby"):
         print loc.getNearby(opts);
         
+    elif (argv[1] == "geocode"):
+        print loc.geoCode(opts);
+        
 
 
 main();
