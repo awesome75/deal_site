@@ -9,8 +9,17 @@ foreach ($deals as $deal) {
 			<?
 				// we need the name of the poster that added this deal
 				$user = getUser($deal -> deal_poster_id); // user is now an object with all usual user properties and methods
+				// print the posted by information
+				$byline = sprintf("Posted By: %s on %s", $user->name, $deal->deal_post_date);
 			?>
-	
+			<span class="byline">
+				<?
+					echo $byline;
+				?>
+			</span>
+			<!-- now we can get to the pricing etc -->
+			
+			
 		</div>
 
 

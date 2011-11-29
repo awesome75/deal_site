@@ -69,6 +69,10 @@ class user {
     var $deal_post_count;
     // declare the methods the user is capable of
     function getLocation() {
+        /*
+            DEPRECATED: 
+                We can use our Python location tools script for this now
+        */
         // get the location of the user and update this object with the data
         // after we have the location assign it to the object and return to the calling script
         $loc_apikey = "ed2da6f194f9306f2dd3c1a8965edfc4bf5afa1c50d70ddcf1677ffb0d19cd97";

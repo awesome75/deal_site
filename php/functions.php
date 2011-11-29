@@ -5,6 +5,7 @@
 function getSQLConnection($db) {
     // very simple, we just need to get a connection to the specified database   
     //$con = mysql_connect('localhost', 'user', 'password'); // didn't think I would put creds in the public repo did you??? XD 
+    $con = mysql_connect('localhost','deals','deals_$');
     mysql_select_db($db);
     return $con;
 }
