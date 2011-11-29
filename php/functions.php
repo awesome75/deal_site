@@ -96,15 +96,15 @@ function getUser($user_id) {
     $res = mysql_query($sql, $con);
     while ($row = mysql_fetch_array($res)) {
         $user -> user_id = $row['user_id'];
-	$user -> name = $row['user_name'];
-	$user -> password = $row['password'];
-	$user -> last_login = $row['last_login'];
-	$user -> creation_date = $row['creation_date'];
-	$user -> ip_address = $row['ip_address'];
-	$user -> location = $row['location'];
-	$user -> email_address = $row['email_address'];
-	$user -> cell_carrier = $row['cell_carrier'];
-	$user -> cell_number = $row['cell_number'];        
+        $user -> name = $row['user_name'];
+	    $user -> password = $row['password'];
+	    $user -> last_login = $row['last_login'];
+    	$user -> creation_date = $row['creation_date'];
+    	$user -> ip_address = $row['ip_address'];
+    	$user -> location = $row['location'];
+    	$user -> email_address = $row['email_address'];
+    	$user -> cell_carrier = $row['cell_carrier'];
+    	$user -> cell_number = $row['cell_number'];        
 
     }	
     // close the SQL connection
