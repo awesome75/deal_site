@@ -57,7 +57,7 @@ class user {
     // this is the object that we will use to store user information in memory
     // declare the properties of the user
     var $user_id;
-    var $user_name;
+    var $name;
     var $password; // probably won't use this, all we have is our hashes, and why store a hash in memory?
     var $last_login;
     var $creation_date;
