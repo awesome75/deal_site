@@ -1,3 +1,4 @@
+<?
 // add_deal.php
 // this will be the script that handles adding a deal
 require_once('functions.php');
@@ -45,3 +46,4 @@ return $result; // return the result of the operation to the script that request
 // clean up
 // close out our SQL connection
 mysql_close($con);
+?>

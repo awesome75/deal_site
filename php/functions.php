@@ -113,12 +113,27 @@ function getUser($user_id) {
     return $user;
 }
 
-function getDeals($type,$deal_id=null,$tag=null,$location=null,$company=null) {   
-    if ($type == 'general') {
-        // in this case we are just taking an IP and turning it into a nice format
-        $loc = system("../python/location_tools.py getloc " . $_SERVER['REMOTE_ADDR']);
-        print $loc;
+function getDeals($deal_id=null,$tag=null,$location=null,$company=null) {   
+    // this function is what will retrieve deals for the various areas of the site
+    // we need to build a query with the desired result and include get_deals.php
+    // which will return the desired deals in array $deals
+    if ($deal_id != null) {
+        // easy case, since if this is here tags, location etc don't matter
+        $sql = "SELECT * FROM `deals` WHERE `deal_id` = " . $deal_id;
     }
+    
+    
+    else if ($tag != null && $location == null && $company == null) {
+        // this case is where we are just getting a tag, 
+        // normally you would have a location or company with this but whatever
+        $sql = "SELECT * FROM `deals` WHERE `deal_tags` = ??";
+        // need to do some research to find best way to search tags
+        
+    }
+   
+   // $sql needs to be defined at this point!
+   include('get_deals.php');
+   
 }
 
 function getCoords($address) {
