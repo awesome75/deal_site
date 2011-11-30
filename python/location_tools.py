@@ -75,8 +75,8 @@ def main ():
         print loc.geoCode(opts);
         
 
-
-main();
+if (__name__ == 'main'):
+    main();
 
 
 

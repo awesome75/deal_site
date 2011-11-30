@@ -115,21 +115,22 @@ h1,h2,h3 {
     line-height: 35px;
     font-size: 40px;
     position: relative;
-    top: -5px;
 }
 
 .deal {
-    display: inline-block;
-    width: 95%;
-    padding: 0 10px 10px 20px;
+    //display: inline-block;
+    //width: 95%;
+    padding: 10px 10px 10px 15px;
     text-align: justify;
     margin: 0;
-    margin-left: 8px;
-    float: left;
+    margin-left: 15px;
+    -webkit-box-shadow: inset 0 0 5px 3px #aad874;
+    -webkit-box-shadow: 0 0 5px 3px #aad874;
+
 }
 
 .deal_title {
-    font-size: 24px;
+    font-size: 28px;
 }
 
 .byline {
@@ -142,10 +143,17 @@ h1,h2,h3 {
 
 .deal_text {
     text-align: justify;    
+    min-height: 50px;
 }
 
 .deal_footer {
-    
+    -webkit-box-shadow: inset 0 0 5px 3px #aad874;
+    -webkit-box-shadow: 0 0 5px 3px #aad874;
+    //width: 95%;
+    margin-left: 15px;
+    padding: 10px 10px 10px 15px;
+    color: #284F31;
+    font-weight: 700;
 }
 
 

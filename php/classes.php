@@ -32,9 +32,34 @@ class deal {
         $tags_string = $this -> tags;   
         // PHP's handy explode function should be able to handle this :)
         // add error checking to this function bro, since 
-        $tags = explode(', ', $tags_string);
+        $tags = explode(',', $tags_string);
         return $tags; // returns a list of tags
     }
+    
+    function getTags($tag_id_array) {
+        // take the tag ID array and get the tag text for each
+        // grab a SQL connection
+        $i = 0;
+        $con = getSQLConnection('deal_site');
+        foreach ($tag_id_array as $id) {
+            // iterate the tag array and make tag objects, return the list
+            $sql = "SELECT * FROM `deal_tags` WHERE `tag_id` = " . $id;
+            $res = mysql_query($sql, $con);
+            while ($row = mysql_fetch_array($res)) {
+                // create and add the tag object   
+                $tag = new tag();
+                $tag -> id = $row['tag_id'];
+                $tag -> text = $row['tag_text'];
+            }
+            $tags[$i] = $tag;
+            $i++;
+        }
+        // close sql connection
+        mysql_close($con);
+        return $tags; // return our tag object array
+    }
+    
+// end of class    
 }
 
 class deal_comment {
@@ -207,6 +232,15 @@ class ipinfo {
     
     
 }
+
+class tag {
+    // object for deal tags
+    var $id;
+    var $text;
+}
+
+
+
 
 ?>
 

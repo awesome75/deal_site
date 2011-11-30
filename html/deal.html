@@ -1,8 +1,9 @@
 <?
 // go through the deals and display them all pretty like
+$i = 0;
 foreach ($deals as $deal) {
 ?>
-	<div class="deal">
+	<div class="deal" <? if($i==0){echo "style='margin-top:55px;'";} ?>>
 		<h1 class="deal_title"><? echo $deal -> deal_title; ?></h1>
 		<div class="deal_info">
 			<?
@@ -14,36 +15,36 @@ foreach ($deals as $deal) {
 			<span class="byline">
 				<?
 					echo $byline;
-                    echo "<br /> $deal->deal_post_date";
 				?>
 			</span>
 			<!-- now we can get to the pricing etc -->
             <table border="0">
                 <tr>
                     <td><? echo $deal -> deal_price; ?></td>
-                    <td><? echo $deal -> deal_end_date; ?></td>
+                    <td><? echo date('F j, Y \a\t g:ia', strtotime($deal->deal_end_date)); ?></td>
                 </tr>
             </table>
 		</div>
         <div class="deal_text">
             <? echo $deal -> deal_text; ?>
         </div>
-        <div class="deal_footer">
-            <?
-                $tags = explode(',', $deal->tags);
-                $ctrl = 0;
-                foreach ($tags as $tag) {
-                    if ($ctrl == 0) {
-                        echo $tag;   
-                    }
-                    else {
-                        echo ", $tag";
-                    }
-                    $ctrl++;
-                }
-            ?>
-        </div>
 	</div>
+    <div class="deal_footer">
+        <?
+            // this takes care of our tag lookup
+            $tag_array = $deal -> separateTags($deal -> tags);
+            $tags = $deal -> getTags($tag_array);
+            for ($c = 0; $c < sizeof($tags); $c++) {
+                if ($c == 0) {
+                    echo $tags[$c]->text;   
+                }
+                else {
+                    echo ", " . $tags[$c]->text;
+                }
+            }
+        ?>
+    </div>
 <?
+    $i++;
 }
 ?>

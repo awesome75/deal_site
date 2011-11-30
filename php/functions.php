@@ -1,7 +1,7 @@
 <?
 // deals site functions.php
 // various things we will need to make the site work should go here
-include('functions_secure.php');
+include('functions_secure.php'); // our non public functions
 
 function getSQLConnection($db) {
     //very simple, we just need to get a connection to the specified database   
