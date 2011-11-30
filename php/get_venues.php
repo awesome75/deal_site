@@ -11,6 +11,7 @@ $ctrl = 0; // loop count
 while ($row = mysql_fetch_array($res)) {
     // create a venue object
     $venue = new venue();
+    // populate our new venue object
     
     // add the venue to the array
     $venues[$ctrl] = $venue;
