@@ -1,6 +1,5 @@
 <?
 // deal site deals.php
-// as you see, this is not HTML or anything. These files are purely just logic
 // the idea hopefully is they will integrate easily and make the site more efficient for code reuse
 // basiically we need to retrieve the SQL values for the deals :D
 require_once('functions.php'); // don't forget our functions file

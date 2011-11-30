@@ -5,7 +5,8 @@
 function getSQLConnection($db) {
     // very simple, we just need to get a connection to the specified database   
     //$con = mysql_connect('localhost', 'user', 'password'); // didn't think I would put creds in the public repo did you??? XD 
-    mysql_select_db($db);
+   $con = mysql_connect('localhost', 'deals', 'deals_$');
+   mysql_select_db($db);
     return $con;
 }
 
@@ -110,6 +111,15 @@ function getUser($user_id) {
     // close the SQL connection
     mysql_close($con);
     return $user;
+}
+
+function getDeals($type,$deal_id=null,$tag=null,$location=null,$company=null) {   
+    if ($type == 'general') {
+        // in this case we are just taking an IP and turning it into a nice format
+        $loc = system('../python/location_tools.py getloc $_SERVER['REMOTE_ADDR']');
+        print $loc;
+    }
+    
 }
 
 
