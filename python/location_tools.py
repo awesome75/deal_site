@@ -61,7 +61,7 @@ def main ():
     # now we can parse the command line args to return data to our PHP scripts
     try:
         com = argv[1];
-        opts = argv[2]; # opts will come seperated by commas
+        opts = argv[2]; # opts will come seperated by commas if there are more than one
     except:
         print "Please specify the desired location command and options";
     # now we can go through the various options

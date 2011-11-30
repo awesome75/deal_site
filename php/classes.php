@@ -68,11 +68,11 @@ class user {
     var $cell_number;
     var $deal_post_count;
     // declare the methods the user is capable of
-    function getLocation() {
+    function getLocation($ip_address) {
         /*
             DEPRECATED: 
                 We can use our Python location tools script for this now
-        */
+        
         // get the location of the user and update this object with the data
         // after we have the location assign it to the object and return to the calling script
         $loc_apikey = "ed2da6f194f9306f2dd3c1a8965edfc4bf5afa1c50d70ddcf1677ffb0d19cd97";
@@ -88,6 +88,11 @@ class user {
         // now return the data
         $this -> location = $location;
         return $this -> location;
+        */
+        
+        // we use Python for this now, the above code will be removed in the future
+        exec("../python/location_tools.py getloc " . $ip_address, $output);
+        return $output[0]; // returned in a nice easy to explode(';', $loc) format 
     }
     
     function addDeal() {
@@ -123,7 +128,11 @@ class user {
         // close the connection and return the result
         mysql_close();
         return $res;
-    }        
+    }      
+    
+    function geoCode($ip_address) {
+        // get the coordinates
+    }
 }
 
 class company {
@@ -147,6 +156,56 @@ class venue {
     var $rating;
     var $thumbs_up;
     var $thumbs_down;
+}
+
+class ipinfo {
+    // this object will hold information about ip addresses
+    var $id; 
+    var $ip_address;
+    var $city;
+    var $state;
+    var $zip;
+    var $latitude;
+    var $longitude;
+    
+    function addIP() {
+        // this will take an IP object and add it to the database
+        // this database is for geolocation, to make our site more accurate
+        // let us build the SQL query
+        $sql = "INSERT INTO `ipgeoloc`" .
+                "(ip_address,city,state,zip_code,latitude,longitude) " .
+                "VALUES (" .
+                "$this->ip_address,$this->city,$this->state,$this-zip,$this->latitude,$this->longitude"
+                ")";
+        // now we can get our SQL connection
+        $con = getSQLConnection('deal_site');
+        $res = mysql_query($sql, $con);
+        // close connection and return result
+        mysql_close($con);
+        return $res; // should be 1 or 0 for success or fail
+    }
+    
+    function dbRetrieve($ip) {
+        // populate this object with information from the database   
+        // let is build our query
+        $sql = "SELECT * FROM `ipgeoloc` WHERE `ip_address` = " . $ip;
+        $con = getSQLConnection('deal_site');
+        $res = mysql_query($sql, $con);
+        while ($row = mysql_fetch_array($res)) {
+            // assign the values from tht DB to the ipinfo object
+            $this -> id = $row['id'];
+            $this -> ip_address = $row['ip_address'];
+            $this -> city = $row['city'];
+            $this -> state = $row['state'];
+            $this -> zip = $row['zip_code'];
+            $this -> latitude = $row['latitude'];
+            $this -> longitude = $row['longitude'];
+            // now the object is populated, go ahead and close the SQL connection
+            mysql_close($con);
+        }
+    }
+    
+    
 }
 
 ?>

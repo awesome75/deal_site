@@ -1,11 +1,12 @@
 <?
 // deals site functions.php
 // various things we will need to make the site work should go here
+include('functions_secure.php');
 
 function getSQLConnection($db) {
-    // very simple, we just need to get a connection to the specified database   
+    //very simple, we just need to get a connection to the specified database   
     //$con = mysql_connect('localhost', 'user', 'password'); // didn't think I would put creds in the public repo did you??? XD 
-    mysql_select_db($db);
+    $con = sgetSQLConnection($db);
     return $con;
 }
 
@@ -115,10 +116,16 @@ function getUser($user_id) {
 function getDeals($type,$deal_id=null,$tag=null,$location=null,$company=null) {   
     if ($type == 'general') {
         // in this case we are just taking an IP and turning it into a nice format
-        $loc = system('../python/location_tools.py getloc $_SERVER['REMOTE_ADDR']');
+        $loc = system("../python/location_tools.py getloc " . $_SERVER['REMOTE_ADDR']);
         print $loc;
     }
-    
+}
+
+function getCoords($address) {
+    // get the coordinates from the specified address, we will use our
+    // location tools python script to get the data
+    exec("../python/location_tools.py geocode " . $address, $output);
+    return $output[0]; // returned as coords 'lat,long'
 }
 
 

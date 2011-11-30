@@ -1,10 +1,11 @@
+<?
 // add_user.php for deals site
 // add a user to the users table from the input of the POST vars
 require_once('functions.php');
 require_once('classes.php');
 // collect and sanitize the POST variables from the sign up form
 $user_name = SQLClean($_POST['user_name']);
-$password = crypt(SQLClean($_POST['password']), 'secure_salt'); // hash the password of course, salt not public :)
+$password = hashNsalt($_POST['password']); // hash the password of course, salt not public :)
 // sql will take care of last_login and creation_date, so let's go on
 $ip_address = $_SERVER['REMOTE_ADDR'];
 // we will use the user class method getLocation later for location data
@@ -16,7 +17,7 @@ $user = new user();
 $user -> user_id = null; // this is to be taken care of by SQL
 $user -> user_name = $user_name;
 $user -> ip_address = $ip_address;
-$user -> location = $user -> getLocation();
+$user -> location = $user -> getLocation($user -> ip_address);
 $user -> email_address = $email;
 $user -> cell_carrier = $cell_carrrier;
 $user -> cell_number = $cell_number;
@@ -27,3 +28,4 @@ $result = addUser($user);
 return $result;
 // clean up
 mysql_close($con);
+?>
