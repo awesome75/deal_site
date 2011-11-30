@@ -175,7 +175,7 @@ class ipinfo {
         $sql = "INSERT INTO `ipgeoloc`" .
                 "(ip_address,city,state,zip_code,latitude,longitude) " .
                 "VALUES (" .
-                "$this->ip_address,$this->city,$this->state,$this-zip,$this->latitude,$this->longitude"
+                "$this->ip_address,$this->city,$this->state,$this-zip,$this->latitude,$this->longitude" .
                 ")";
         // now we can get our SQL connection
         $con = getSQLConnection('deal_site');
