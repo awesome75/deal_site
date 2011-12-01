@@ -54,7 +54,20 @@ class locationTools:
         data = json.loads(results);
         for obj in data['results']:
             return "%s,%s" % (obj['geometry']['location']['lat'], obj['geometry']['location']['lng']);
-
+            
+    def reverseGeoCode(self, latlng, sensor="false"):
+        # take a coordinate and get the closest address possible for it
+        url_template = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s&sensor=%s";
+        url = url_template % (latlng, sensor);
+        # get the results in memory
+        page = urllib.urlopen(url);
+        results = page.read();
+        page.close(); # close page handle
+        data = json.loads(results);
+        for obj in data['results']:
+            # parse the json results and get the address out of there
+            print obj['formatted_address'];
+            exit();
 
 def main ():
     loc = locationTools(); # get our location class
@@ -74,8 +87,11 @@ def main ():
     elif (argv[1] == "geocode"):
         print loc.geoCode(opts);
         
+    elif (argv[1] == "revgeocode"):
+        loc.reverseGeoCode(opts);
+        
 
-if (__name__ == 'main'):
+if __name__ == '__main__':
     main();
 
 

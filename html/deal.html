@@ -20,10 +20,37 @@ foreach ($deals as $deal) {
 			<!-- now we can get to the pricing etc -->
             <table border="0">
                 <tr>
-                    <td><? echo $deal -> deal_price; ?></td>
-                    <td><? echo date('F j, Y \a\t g:ia', strtotime($deal->deal_end_date)); ?></td>
+                    <td>$<? echo $deal -> deal_price; ?>,</td>
+                    <td>&nbsp;Ends: 
+                        <?
+                            // need to determine if this is a deal with no end, like taco tuesday
+                            // if the date is unix epoc, then we will assume the deal runs forever
+                            if (date('Y', strtotime($deal->deal_end_date)) == '1970') {
+                                // simple enough as you see, if 1970 is the year obviously no date was defined
+                                echo "Indefinite";
+                            }
+                            else {
+                                // otherwise print the end date
+                                echo date('F j, Y \a\t g:ia', strtotime($deal->deal_end_date)); 
+                            }
+                        ?>
+                    </td>
                 </tr>
             </table>
+            <div class="when_where">
+                <?
+                    if ($deal -> deal_latitude != '0'){ // if the DB has a 0 value it means don't display location
+                        // this is where we get the location from the coords
+                        $raw_address = $deal -> getAddress($deal->deal_latitude . ',' . $deal->deal_longitude);
+                        // right now it looks like '730 E 6th Ave, Denver, CO 80203, USA'
+                        // we don't need all of this really
+                        $address_parts = explode(', ', $raw_address);
+                        $address = $address_parts[0] . ' ' . $address_parts[1] . ', ' . substr($address_parts[2], 0, 2);
+                        echo $address;
+                    }
+                ?>
+            </div>
+        <!-- end of deal info -->    
 		</div>
         <div class="deal_text">
             <? echo $deal -> deal_text; ?>

@@ -14,6 +14,7 @@ while ($row = mysql_fetch_array($res)) {
     $company -> name = $row['company_name'];
     $company -> rating = $row['company_rating'];
     $company -> about = $row['company_about'];
+    $company - address = $row['company_address'];
     $company -> thumbs_up = $row['company_thumbs_up'];
     $company -> thumbs_down = $row['thumbs_down'];
     $companies[$ctrl] = $company;

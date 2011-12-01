@@ -18,6 +18,7 @@ while ($row = mysql_fetch_array($res)) {
     $current -> deal_poster_id = $row['deal_poster_id'];
     $current -> deal_price = $row['deal_price'];
     $current -> deal_post_date = $row['deal_post_date'];
+    $current -> deal_start_date = $roww['deal_Start_date'];
     $current -> deal_end_date = $row['deal_end_date'];
     $current -> deal_text = $row['deal_text'];
     $current -> deal_latitude = $row['deal_latitude'];

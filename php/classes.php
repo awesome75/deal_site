@@ -12,6 +12,7 @@ class deal {
     var $deal_poster_id;
     var $deal_price;
     var $deal_post_date;
+    var $deal_start_date;
     var $deal_end_date;
     var $deal_text;
     var $deal_latitude;
@@ -57,6 +58,12 @@ class deal {
         // close sql connection
         mysql_close($con);
         return $tags; // return our tag object array
+    }
+    
+    function getAddress($coords) {
+        // take the coordinate pair from the DB and turn it into an address for the deal   
+        exec("./python/location_tools.py revgeocode " . $coords, $output);
+        return $output[0]; // looks like '1435 Pearl St, Denver, CO 80203, USA'
     }
     
 // end of class    
@@ -166,6 +173,7 @@ class company {
     var $name;
     var $rating;
     var $about;
+    var $address;
     var $thumbs_up;
     var $thumbs_down;
 }
