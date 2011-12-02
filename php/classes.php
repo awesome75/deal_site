@@ -101,32 +101,6 @@ class user {
     var $cell_number;
     var $deal_post_count;
     // declare the methods the user is capable of
-    function getLocation($ip_address) {
-        /*
-            DEPRECATED: 
-                We can use our Python location tools script for this now
-        
-        // get the location of the user and update this object with the data
-        // after we have the location assign it to the object and return to the calling script
-        $loc_apikey = "ed2da6f194f9306f2dd3c1a8965edfc4bf5afa1c50d70ddcf1677ffb0d19cd97";
-        $url = "http://api.ipinfodb.com/v3/ip-city/?key=" . $loc_apikey . "&ip=" . $ip_address;
-        $curl_handle=curl_init();
-        curl_setopt($curl_handle,CURLOPT_URL,$url);
-        curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
-        $location_data = curl_exec($curl_handle);
-        curl_close($curl_handle);
-        // now that we have the location we can parse the contents
-        
-        
-        // now return the data
-        $this -> location = $location;
-        return $this -> location;
-        */
-        
-        // we use Python for this now, the above code will be removed in the future
-        exec("../python/location_tools.py getloc " . $ip_address, $output);
-        return $output[0]; // returned in a nice easy to explode(';', $loc) format 
-    }
     
     function addDeal() {
         // this is how we will call the add_deal.php script from our user object    
@@ -202,6 +176,24 @@ class ipinfo {
     var $latitude;
     var $longitude;
     
+    function isNewIP() {
+        // we only want to make a new object in the DB if the IP isn't there
+        $sql = "SELECT `id` FROM `ipgeoloc` WHERE `ip_address` = " . $this -> ip_address;
+        $con = getSQLConnection('deal_site');
+        $res = mysql_query($con, $sql);
+        mysql_close($con); // done with this
+        if ($res) {
+            // then we know we have this entry, set the id for the calling script to 
+            // have reference to
+            $this -> id = mysql_result($res, 0);
+            return 0;
+        }
+        else {
+            //$this -> addIP(); // for now we will not auto add new IP at this point, the less automagic the better
+            return 1; // 1 for yes, the ip is unique and should probably be added
+        }
+    }
+    
     function addIP() {
         // this will take an IP object and add it to the database
         // this database is for geolocation, to make our site more accurate
@@ -237,6 +229,30 @@ class ipinfo {
             // now the object is populated, go ahead and close the SQL connection
             mysql_close($con);
         }
+    }
+    
+     function getLocation() {
+        /*
+            DEPRECATED: 
+                We can use our Python location tools script for this now
+        
+        // get the location of the user and update this object with the data
+        // after we have the location assign it to the object and return to the calling script
+        $loc_apikey = "ed2da6f194f9306f2dd3c1a8965edfc4bf5afa1c50d70ddcf1677ffb0d19cd97";
+        $url = "http://api.ipinfodb.com/v3/ip-city/?key=" . $loc_apikey . "&ip=" . $ip_address;
+        $curl_handle=curl_init();
+        curl_setopt($curl_handle,CURLOPT_URL,$url);
+        curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
+        $location_data = curl_exec($curl_handle);
+        curl_close($curl_handle);
+        // now that we have the location we can parse the contents
+        // now return the data
+        $this -> location = $location;
+        return $this -> location;
+        */
+        // we use Python for this now, the above code will be removed in the future
+        exec("./python/location_tools.py getloc " . $this->ip_address, $output);
+        return $output[0]; // returned in a nice easy to explode(';', $loc) format 
     }
     
     

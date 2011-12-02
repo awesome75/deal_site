@@ -163,6 +163,15 @@ function getCoords($address) {
     return $output[0]; // returned as coords 'lat,long'
 }
 
+function initIPObject() {
+    // this can be called by any page wishing to perform operations involving the ipgeoloc table
+    // to build an IP object based on the current remote client's IP information
+    $ipinf = new ipinfo();
+    // let's set what we know
+    $ipinf -> ip_address = $_SERVER['REMOTE_ADDR'];
+    // and that is pretty much it until we run a geoloc, so just return what we got
+    return $ipinf;
+}
 
 ?>
 
