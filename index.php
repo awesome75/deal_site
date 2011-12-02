@@ -1,6 +1,7 @@
 <?
+require_once('php/classes.php'); // make sure we have our functions and classes
 $ptitle = "Home";
-include('php/get_deals.php');
+// include('php/get_deals.php'); getDeals() will handle this part
 include('html/header.html');
 // right sidebar will be for our promoted deals, not implemented yet
 /*
@@ -20,6 +21,7 @@ include('html/sidebar_left.html'); // already closed in the code
 include('html/deals_container.html');
 include('html/add_deal_button.html');
 // deals will go here
+$deals = getDeals();
 // we can accesss our deal array with $deals, or we can include the deal.html view to iterate and display them
 include('html/deal.html');
 // end of the deals, finish up the page

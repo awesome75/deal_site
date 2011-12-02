@@ -10,6 +10,7 @@ class deal {
     var $deal_id;
     var $deal_title;
     var $deal_poster_id;
+    var $company_id;
     var $deal_price;
     var $deal_post_date;
     var $deal_start_date;

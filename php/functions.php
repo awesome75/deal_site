@@ -122,7 +122,7 @@ function getDeals($deal_id=null,$tag=null,$location=null,$company=null) {
         $sql = "SELECT * FROM `deals` WHERE `deal_id` = " . $deal_id;
     }
     
-    
+    // just grabbing some deals by tag
     else if ($tag != null && $location == null && $company == null) {
         // this case is where we are just getting a tag, 
         // normally you would have a location or company with this but whatever
@@ -130,9 +130,29 @@ function getDeals($deal_id=null,$tag=null,$location=null,$company=null) {
         // need to do some research to find best way to search tags
         
     }
+    
+    // just grabbing some deals by location
+    else if ($tag == null && $location != null && $company == null) {
+        $sql = "SELECT * FROM `deals` WHERE ??";
+        // need to find a way to quickly get and compare the query
+        // to the deal locations. how to do this in a scalable way, I have no idea
+        // will need much more research into this function
+    }
+    
+    // only getting deals by company
+    else if ($tag == null && $location == null && $company != null) {
+        // for now simple query to get us going
+        $sql = "SELECT * FROM `deals` WHERE `company_id` = " . $company;
+    }
+    
+    else {
+        // this is if all else fails, just grab the newest deals from the DB I guess
+        $sql = "SELECT * FROM `deals` ORDER BY `deal_post_date` DESC"; // grab our deals
+    }
    
    // $sql needs to be defined at this point!
    include('get_deals.php');
+   return $deals; // return the deals to the script
    
 }
 

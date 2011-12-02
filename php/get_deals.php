@@ -7,7 +7,11 @@ require_once('classes.php'); // gonna need that deal class
 // first grab a connection to the SQL DB
 $con = getSQLConnection('deal_site'); // $con has our DB reference 
 // go on to getting the deals and populating them into a class so we can use this script anywhere on site
-$sql = "SELECT * FROM `deals` ORDER BY `deal_post_date` DESC"; // grab our deals
+/*
+    $sql = "SELECT * FROM `deals` ORDER BY `deal_post_date` DESC"; // grab our deals
+    We don't need this anymore, getDeals() will defin the SQL for us, this script just retrieves
+    the deals ands stores them in memory
+*/
 $res = mysql_query($sql, $con);
 $ctrl = 0; // loop counter
 // now to go through them
@@ -16,9 +20,10 @@ while ($row = mysql_fetch_array($res)) {
     $current -> deal_id = $row['deal_id'];
     $current -> deal_title = $row['deal_title'];
     $current -> deal_poster_id = $row['deal_poster_id'];
+    $current -> company_id = $row['company_id'];
     $current -> deal_price = $row['deal_price'];
     $current -> deal_post_date = $row['deal_post_date'];
-    $current -> deal_start_date = $roww['deal_Start_date'];
+    $current -> deal_start_date = $row['deal_start_date'];
     $current -> deal_end_date = $row['deal_end_date'];
     $current -> deal_text = $row['deal_text'];
     $current -> deal_latitude = $row['deal_latitude'];
