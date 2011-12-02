@@ -18,6 +18,7 @@ include('html/sidebar_left.html'); // already closed in the code
 </style>
 <?
 include('html/deals_container.html');
+include('html/add_deal_button.html');
 // deals will go here
 // we can accesss our deal array with $deals, or we can include the deal.html view to iterate and display them
 include('html/deal.html');
