@@ -1,20 +1,8 @@
 <?
 require_once('php/classes.php'); // make sure we have our functions and classes
-/*
- location stuff
-*/
-$ipinf = initIPObject();
-$rawloc = $ipinf -> getLocation();
-$res = $ipinf -> initLocationData($rawloc);
-$rawloc = explode(';', $rawloc);
-foreach ($rawloc as $part) {
- echo $part;
- echo "<br />";
-}
-
-/*
- end of location stuff
-*/
+// begin ip geo tracking
+$ipinf = getClientLocData();
+// end of location stuff
 $ptitle = "Home";
 // include('php/get_deals.php'); getDeals() will handle this part
 include('html/header.html');

@@ -173,8 +173,10 @@ class ipinfo {
     var $city;
     var $state;
     var $zip;
+    var $country;
     var $latitude;
     var $longitude;
+    var $is_new;
     
     function isNewIP() {
         // we only want to make a new object in the DB if the IP isn't there
@@ -186,11 +188,14 @@ class ipinfo {
             // then we know we have this entry, set the id for the calling script to 
             // have reference to
             $this -> id = mysql_result($res, 0);
+            $this -> is_new = 0;
             return 0;
         }
         else {
             //$this -> addIP(); // for now we will not auto add new IP at this point, the less automagic the better
+            $this -> is_new = 1;
             return 1; // 1 for yes, the ip is unique and should probably be added
+            
         }
     }
     
@@ -253,6 +258,18 @@ class ipinfo {
         // we use Python for this now, the above code will be removed in the future
         exec("./python/location_tools.py getloc " . $this->ip_address, $output);
         return $output[0]; // returned in a nice easy to explode(';', $loc) format 
+    }
+    
+    function initLocationData($locdata) {
+        $locdata = explode(';', $locdata);
+        // now we have a nice array of location parts
+        // position 0 in this array is response status, 1 is whitespace
+        $this -> city = $locdata[6];
+        $this -> state = $locdata[5];
+        $this -> zip = $locdata[7];
+        $this -> country = $locdata[3];
+        $this -> latitude = $locdata[8];
+        $this -> longitude = $locdata[9];
     }
     
     

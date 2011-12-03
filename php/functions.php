@@ -122,12 +122,14 @@ function getDeals($deal_id=null,$tag=null,$location=null,$company=null) {
         $sql = "SELECT * FROM `deals` WHERE `deal_id` = " . $deal_id;
     }
     
-    // just grabbing some deals by tag
+    // just grabbing some deals by tag ($tag will be an id not string)
     else if ($tag != null && $location == null && $company == null) {
         // this case is where we are just getting a tag, 
         // normally you would have a location or company with this but whatever
-        $sql = "SELECT * FROM `deals` WHERE `deal_tags` = ??";
+        $sql = "SELECT * FROM `deals` WHERE `deal_tags` LIKE '%'" . $tag . "%'";
         // need to do some research to find best way to search tags
+        // I am sure this is very far from the most efficient way, but this
+        // should do until we have a higher volume of SQL use
         
     }
     
@@ -143,6 +145,17 @@ function getDeals($deal_id=null,$tag=null,$location=null,$company=null) {
     else if ($tag == null && $location == null && $company != null) {
         // for now simple query to get us going
         $sql = "SELECT * FROM `deals` WHERE `company_id` = " . $company;
+    }
+    
+    // this case we go by tag and location
+    else if ($tag != null && $location !=null && $company == null) {
+        // research location search first
+    }
+    
+    // go by company and tag
+    else if ($tag != null && $location == null && $company != null) {
+        $sql = ("SELECT * FROM `deals` WHERE `company_id` = %d AND`deal_tags` LIKE '%'" % $company) . $tag . "%'";
+        // simple enough, look into speed improvements however
     }
     
     else {
@@ -170,6 +183,15 @@ function initIPObject() {
     // let's set what we know
     $ipinf -> ip_address = $_SERVER['REMOTE_ADDR'];
     // and that is pretty much it until we run a geoloc, so just return what we got
+    return $ipinf;
+}
+
+function getClientLocData() {
+    // this function is what will make an ipinf object for the user
+    // whether or not we make a new one or get one from the DB
+    $ipinf = initIPObject();
+    $rawloc = $ipinf -> getLocation();
+    $ipinf -> initLocationData($rawloc);
     return $ipinf;
 }
 
