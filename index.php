@@ -3,6 +3,13 @@ require_once('php/classes.php'); // make sure we have our functions and classes
 // begin ip geo tracking
 $ipinf = getClientLocData();
 // end of location stuff
+// check if a tag is set
+if ($_GET['tag']) {
+    $tag = new tag();
+    $tag -> text = htmlentities($_GET['tag']);
+    $tag -> getID(); // if tag is new the DB will tell us in the is_new property (0 or 1)
+}
+// include html elements
 $ptitle = "Home";
 // include('php/get_deals.php'); getDeals() will handle this part
 include('html/header.html');
@@ -24,7 +31,14 @@ include('html/sidebar_left.html'); // already closed in the code
 include('html/deals_container.html');
 include('html/add_deal_button.html');
 // deals will go here
-$deals = getDeals();
+// if there is a tag set let's get those deals
+if ($tag) {
+    $deals = getDeals(null, $tag->id, null, null);
+}
+else {
+    // otherwise just general deal retrieve
+    $deals = getDeals();
+}
 // we can accesss our deal array with $deals, or we can include the deal.html view to iterate and display them
 include('html/deal.html');
 // end of the deals, finish up the page
