@@ -1,26 +1,19 @@
 TODO list for the site:
 
-Create HTML to display results of back end code - in progress
+Create HTML to display results of back end code (various views need to be created) - in progress
+
+Finish deal retrieval system (location and company and tag) - in progress
 
 Rid the code of all syntax errors - in progress
 
-Most of the code has been ran and is working decently, but we need to make it so that we can get deals in more ways 
-than one
+Create membership system (SQL table, home view, login system)
 
-The location script is doing well. Look into speed inmprovements. Also we have lot's more to do in regards to deal 
-search by location. Also there needs to be functionality to keep up our location db
+Location tools (speed improvements, more features) - in progress
 
-Make a algorithm to rank deals based on votes, user status, and comment analysis
+Make a algorithm to rank deals based on votes, user status, and comment analysis (DealRank)
 
 Make algorithm to rank comments, to help give better data to DealRank algorithm
 
-Create an auction based advertising platform for brands to promote deals posted about them my them or someone else
-and to allow them to create ads and have real time bidding and stats to analyze their campaigns
+Create mobile site (we will forget about native mobile apps for now)
 
-Create mobile site and apps
-
-Transition to new record system, we will be leaving MySQL in favor of a NoSQL solution, probably Cassandra
-
-At some point in the future rewrite the site in Python instead of PHP. Probably make a new project here on c9 for that affter
-this PHP version hits production status
-
+Rewrite site in Python
