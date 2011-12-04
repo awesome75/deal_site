@@ -2,9 +2,8 @@
 # Script to retrieve places from the google places API, we will use these for "venues"
 # Places API key is AIzaSyCwQN5dwVIEPE0-67GP-xfX6Dccpqmagfo
 
-import urllib;
-import string;
-import json;
+from urllib import urlopen;
+from json import loads as jsonloads;
 from sys import argv;
 
 class locationTools:
@@ -19,7 +18,7 @@ class locationTools:
         url_template = "http://api.ipinfodb.com/v3/ip-city/?key=%s&ip=%s";
         url = url_template % (api_key, ip_address);
         # make the request, get the data
-        page = urllib.urlopen(url);
+        page = urlopen(url);
         result = page.read();
         page.close(); # close our page handle
         return result; # no need to parse results, they are returned in an easy to explode() format
@@ -30,14 +29,14 @@ class locationTools:
 		# first build the url
 		url = self.url_template % (location, radius, sensor, keyword, name, qtype);		
 		# now we have a url, let's use urllib to get the results from google
-		page = urllib.urlopen(url);
+		page = urlopen(url);
 		results = page.read(); # results now contains our raw location search data
 		page.close(); # close our URL handle
 		return results;
 
     def parseLocationData(self, json_results):
 	    # parse the returned data					
-		locs = json.loads(json_results);
+		locs = jsonloads(json_results);
 		i = 0;
 		for loc in locs['results']:
 			print loc;
@@ -48,10 +47,10 @@ class locationTools:
         url_template = "https://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=%s";
         url = url_template % (address, sensor);
         # now we get read the page into memory
-        page = urllib.urlopen(url);
+        page = urlopen(url);
         results = page.read();
         page.close(); # close our page handle
-        data = json.loads(results);
+        data = jsonloads(results);
         for obj in data['results']:
             return "%s,%s" % (obj['geometry']['location']['lat'], obj['geometry']['location']['lng']);
             
@@ -60,10 +59,10 @@ class locationTools:
         url_template = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s&sensor=%s";
         url = url_template % (latlng, sensor);
         # get the results in memory
-        page = urllib.urlopen(url);
+        page = urlopen(url);
         results = page.read();
         page.close(); # close page handle
-        data = json.loads(results);
+        data = jsonloads(results);
         for obj in data['results']:
             # parse the json results and get the address out of there
             print obj['formatted_address'];
