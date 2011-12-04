@@ -4,6 +4,8 @@ Create HTML to display results of back end code (various views need to be create
 
 Finish deal retrieval system (location and company and tag) - in progress
 
+Security review (better input sanitization, close site source)
+
 debug and optimize existing codebase - in progress
 
 Create membership system (SQL table, home view, login system)

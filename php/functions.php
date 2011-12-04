@@ -193,6 +193,13 @@ function getClientLocData() {
     return $ipinf;
 }
 
+function filterID($id) {
+    // make a user supplied ID safe for SQL queries
+    // this is for numeric IDs, obviously
+    preg_match('([\d]+)', $id, $matches);
+    return $matches[0];
+}
+
 ?>
 
 

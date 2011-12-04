@@ -146,11 +146,28 @@ class company {
     // the company object stores company information for scripts
     var $id;
     var $name;
-    var $rating;
+    var $algo_rank;
     var $about;
     var $address;
     var $thumbs_up;
     var $thumbs_down;
+    
+    function initCompanyData() {
+        // populate the company object from the DB
+        $sql = "SELECT * FROM `companies` WHERE `company_id` = " . $this -> id;
+        $con = getSQLConnection('deal_site');
+        $res = mysql_query($sql, $con);
+        while ($row = mysql_fetch_array($res)) {
+            $this -> name = $row['company_name'];
+            $this -> algo_rank = $rpw['company_algo_rank'];
+            $this -> about = $row['company_about'];
+            $this -> address = $row['company_address'];
+            $this -> thumbs_up = $row['company_thumbs_up'];
+            $this -> thumbs_down = $row['company_thumbs_down']; 
+        }
+        // close the SQL connection
+        mysql_close($con);
+    }
 }
 
 class venue {
@@ -231,9 +248,9 @@ class ipinfo {
             $this -> zip = $row['zip_code'];
             $this -> latitude = $row['latitude'];
             $this -> longitude = $row['longitude'];
-            // now the object is populated, go ahead and close the SQL connection
-            mysql_close($con);
         }
+        // now the object is populated, go ahead and close the SQL connection
+        mysql_close($con);
     }
     
      function getLocation() {
