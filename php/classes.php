@@ -279,6 +279,28 @@ class tag {
     // object for deal tags
     var $id;
     var $text;
+    var $is_new;
+    
+    function getID() {
+        // determine if the tag is in DB and therefor if it is new or not
+        // first our query
+        $sql = "SELECT `tag_id` FROM `deal_tags` WHERE `tag_text` = '" . $this -> text . "'";
+        // get a SQL connection
+        $con = getSQLConnection('deal_site');
+        $this -> id = mysql_result(mysql_query($sql, $con), 0);
+        if (!$this->id) {
+            // tag must be new
+            $this -> is_new = 1;
+        }
+        else {
+            $this -> is_new = 0;   
+        }
+        // close the SQL connection
+        mysql_close($con);
+        // just in case the calling script needs it
+        return $this -> id;
+    }
+    
 }
 
 

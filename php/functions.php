@@ -126,11 +126,9 @@ function getDeals($deal_id=null,$tag=null,$location=null,$company=null) {
     else if ($tag != null && $location == null && $company == null) {
         // this case is where we are just getting a tag, 
         // normally you would have a location or company with this but whatever
-        $sql = "SELECT * FROM `deals` WHERE `deal_tags` LIKE '%'" . $tag . "%'";
+        $sql = "SELECT * FROM `deals` WHERE `deal_tags` LIKE '%" . $tag . "%'";
         // need to do some research to find best way to search tags
-        // I am sure this is very far from the most efficient way, but this
-        // should do until we have a higher volume of SQL use
-        
+        $con = getSQLConnection('deal_site');
     }
     
     // just grabbing some deals by location
