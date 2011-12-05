@@ -35,6 +35,11 @@ include('html/add_deal_button.html');
 if ($tag) {
     $deals = getDeals(null, $tag->id, null, null);
 }
+
+else if ($_GET['deal_id']) {
+    $deals = getDeals(filterID($_GET['deal_id']), null, null, null);
+}
+
 else {
     // otherwise just general deal retrieve
     $deals = getDeals();
