@@ -2,7 +2,7 @@ TODO list for the site:
 
 Create HTML to display results of back end code (various views need to be created) - in progress
 
-Finish deal retrieval system (location and company and tag) - in progress
+Finish deal retrieval system (location search not working yet) - in progress
 
 Security review (better input sanitization, close site source)
 

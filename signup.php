@@ -15,20 +15,9 @@ include('html/header.html');
 </style>
 <?
 include('html/deals_container.html');
-?>
-<!-- signup content -->
-<div id="signup_box">
-</div>
-<div id="signup_splash">
-    <h1>Sign up now to always have access to the latest deals!</h1>
-    <script>
-        for (i = 0; i < 50; i++) {
-            document.write('hello world. ');   
-        }
-    </script>
-</div>
-<!-- finish page -->
-<?
+// signup content
+include('html/signup.html');
+// finish page
 closeSidebar();
 include('html/footer.html');
 ?>

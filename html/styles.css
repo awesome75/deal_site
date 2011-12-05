@@ -173,20 +173,30 @@ h1,h2,h3 {
 }
 
 #signup_box {
-    width: 40%;
-    height: 400px;
+    width: 30%;
+    height: auto;
     float: right;
     margin: 10px 0 0 50px;
-    padding: 5px;
+    padding: 20px 0px 20px 0px;
+    text-align: center;
     border-radius: 10px;
     -webkit-box-shadow: 0 0 5px 3px #888;
     background: #aad874;
 }
 
-#signup_splash {
-    width: 57%;
+#signup_box input {
+    width: 90%;
+    height: 30px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    color: #284F31;
+    font-weight: bold;
+    padding: 3px 3px 3px 5px;
 }
 
+#signup_splash {
+    width: 67%;
+}
 
 
 

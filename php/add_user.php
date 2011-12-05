@@ -9,7 +9,7 @@ $password = hashNsalt($_POST['password']); // hash the password of course, salt 
 // sql will take care of last_login and creation_date, so let's go on
 $ip_address = $_SERVER['REMOTE_ADDR'];
 // we will use the user class method getLocation later for location data
-$email = SQLClean($_POST['emai']);
+$email = SQLClean($_POST['email']);
 $cell_carrrier = SQLClean($_POST['cell_carrier']); // this one and cell number are optional
 $cell_number = SQLClean($_POST['cell_number']);
 // that is all we need for now, so let's get to building a user object
