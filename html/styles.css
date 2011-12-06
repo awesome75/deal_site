@@ -198,6 +198,10 @@ h1,h2,h3 {
     width: 67%;
 }
 
+#submit_button {
+    width: 75px;
+    margin-bottom: 0;
+}
 
 
 
