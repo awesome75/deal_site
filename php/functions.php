@@ -13,7 +13,9 @@ function getSQLConnection($db) {
 function SQLClean($val) {
     // sanitize the values that go into the DB
     // probably build some error check into this function at some point lol
+    $con = getSQLConnection('deal_site');
     $val = htmlspecialchars(mysql_real_escape_string($val));
+    mysql_close($con);
     return $val;
 }
 
@@ -67,19 +69,22 @@ function addDealComment($comment) {
 function addUser($user) {
     // takes a passed user object and adds it to the DB
     // returns 1 or 0 for success or fail
+    $con = getSQLConnection('deal_site');
     $sql = 
-        "INSERT INTO `users` (user_name,password,ip_address,location,email_addresss," . 
-        "cell_carrier,cell_nummber) " .
-        "VALUES ($user->user_name,$user->password,$user->ip_address,$user->location," .
-        "$user->email_address,$user->cell_carrier,$user->cell_number" .
+        "INSERT INTO `users` (user_name,password,ip_address,location,email_address) " . 
+        //"cell_carrier,cell_nummber) " .
+        "VALUES ('$user->user_name','$user->password','$user->ip_address','$user->location'," .
+        "'$user->email_address'" . //,$user->cell_carrier,$user->cell_number" .
         ")";
-    $result = mysql_query($sql);
+    //$result = mysql_query($sql, $con); user registration disabled for now
     if ($result == true) {
         return 1;   
     }
     else {
         return 0;   
     }
+    // close our SQL connection
+    mysql_close($con);
 }
 
 function closeSidebar() {
