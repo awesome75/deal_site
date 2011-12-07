@@ -4,7 +4,11 @@ $i = 0;
 foreach ($deals as $deal) {
 ?>
 	<div class="deal" <? if($i==0){echo "style='margin-top:55px;'";} ?>>
-		<h1 class="deal_title"><? echo $deal -> deal_title; ?></h1>
+		<h1 class="deal_title">
+            <? 
+                echo sprintf('<a href="/deal_site/?deal=%s">%s</a>', $deal->deal_id, $deal->deal_title);
+            ?>
+        </h1>
 		<div class="deal_info">
 			<?
 				// we need the name of the poster that added this deal
