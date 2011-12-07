@@ -1,9 +1,12 @@
 <!-- collect user information -->
 <div id="signup_box">
-    <input type="email" name="email" value="Email.." />
-    <input type="text" name="user_name" value="User Name.." />
-    <input type="password" name="password" value="Password.." />
-    <input type="button" value="Sign Up" id="submit_button" />
+    <form name="signup" action="<? echo $_SERVER['PHP_SELF']; ?>" method="POST" />
+        <input type="text" name="full_name" value="Full Name.." />
+        <input type="email" name="email" value="Email.." />
+        <input type="text" name="user_name" value="User Name.." />
+        <input type="password" name="password" value="Password.." />
+        <input type="submit" value="Sign Up" id="submit_button" style="width: 75px;" />
+    </form>
 </div>
 <!-- end of the input box -->
 <div id="signup_splash">
