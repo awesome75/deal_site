@@ -122,13 +122,19 @@ function getDeals($deal_id=null,$tag=null,$location=null,$company=null) {
     // this function is what will retrieve deals for the various areas of the site
     // we need to build a query with the desired result and include get_deals.php
     // which will return the desired deals in array $deals
+    /*
+        TODO:
+            We still need to add code to get deals with price
+            Also we need to add search by location
+            Look into easier way to cover all cases
+    */
     if ($deal_id != null) {
         // easy case, since if this is here tags, location etc don't matter
         $sql = "SELECT * FROM `deals` WHERE `deal_id` = " . $deal_id;
     }
     
     // just grabbing some deals by tag ($tag will be an id not string)
-    else if ($tag != null && $location == null && $company == null) {
+    else if ($tag != null && $location == null && $company == null && $price == null) {
         // this case is where we are just getting a tag, 
         // normally you would have a location or company with this but whatever
         $sql = "SELECT * FROM `deals` WHERE `deal_tags` LIKE '%" . $tag . "%'";
@@ -137,7 +143,7 @@ function getDeals($deal_id=null,$tag=null,$location=null,$company=null) {
     }
     
     // just grabbing some deals by location
-    else if ($tag == null && $location != null && $company == null) {
+    else if ($tag == null && $location != null && $company == null && $price == null) {
         $sql = "SELECT * FROM `deals` WHERE ??";
         // need to find a way to quickly get and compare the query
         // to the deal locations. how to do this in a scalable way, I have no idea
@@ -145,18 +151,23 @@ function getDeals($deal_id=null,$tag=null,$location=null,$company=null) {
     }
     
     // only getting deals by company
-    else if ($tag == null && $location == null && $company != null) {
+    else if ($tag == null && $location == null && $company != null && $price == null) {
         // for now simple query to get us going
         $sql = "SELECT * FROM `deals` WHERE `company_id` = " . $company;
     }
     
+    // retrieve deals with only with price filter
+    else if ($tag == null && $location == null && $company == null && $price != null) {
+        $sql = "SELECT * FROM `deals` WHERE `deal_price` < " . $price;
+    }
+    
     // this case we go by tag and location
-    else if ($tag != null && $location !=null && $company == null) {
+    else if ($tag != null && $location !=null && $company == null && $price == null) {
         // research location search first
     }
     
     // go by company and tag
-    else if ($tag != null && $location == null && $company != null) {
+    else if ($tag != null && $location == null && $company != null && $price == null) {
         $sql = ("SELECT * FROM `deals` WHERE `company_id` = %d AND`deal_tags` LIKE '%'" % $company) . $tag . "%'";
         // simple enough, look into speed improvements however
     }

@@ -63,10 +63,11 @@ foreach ($deals as $deal) {
             $tags = $deal -> getTags($tag_array);
             for ($c = 0; $c < sizeof($tags); $c++) {
                 if ($c == 0) {
-                    echo $tags[$c]->text;   
+                    $tag_template = "<a href='%s'>%s</a>";
+                    echo sprintf($tag_template, '/deal_site/?tag=' . $tags[$c]->text, $tags[$c] -> text);
                 }
                 else {
-                    echo ", " . $tags[$c]->text;
+                    echo ", " . sprintf($tag_template, '/deal_site/?tag=' . $tags[$c]->text, $tags[$c] -> text);
                 }
             }
         ?>

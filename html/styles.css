@@ -172,6 +172,14 @@ h1,h2,h3 {
     font-weight: 700;
 }
 
+.deal_footer a:link {
+    color: #284F31;
+}
+
+.deal_footer a:visited {
+    color: #284F31;
+}
+
 #signup_box {
     width: 30%;
     height: auto;
