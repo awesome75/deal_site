@@ -181,11 +181,27 @@ function getDeals($deal_id=null,$tag=null,$location=null,$company=null) {
         // research location search first
     }
     
-    // go by company and tag
+    // go by tag and company
     else if ($tag != null && $location == null && $company != null && $price == null) {
         $sql = ("SELECT * FROM `deals` WHERE `company_id` = %d AND`deal_tags` LIKE '%'" % $company) . $tag . "%'";
         // simple enough, look into speed improvements however
     }
+    
+    // go by tag and price
+    else if ($tag != null && $location == null && $company == null && $price != null) {
+        $sql = sprintf("SELECT * FROM `deals` WHERE `deal_tags` LIKE '%%%s%%' AND `deal_price` < %s", $tag, $price);
+        // simple query, look into speed improvements
+    }
+    
+    else if ($tag == null && $location == null && $company != null && $price != null) {
+        $sql = sprintf("SELECT * FROM `deals` WHERE `company_id` = %s AND `deal_price` < %s", $company, $price);
+        // probably a pretty solid query
+    }
+    
+    /*
+        this will be section with various location mixes, unfortunately we have not figured
+        location search out quite just yet
+    */
     
     else {
         // this is if all else fails, just grab the newest deals from the DB I guess

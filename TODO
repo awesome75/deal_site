@@ -7,12 +7,15 @@ Validate all HTML and CSS
 Add more semantic markup with HTML5
 
 Finish deal retrieval system (location search not working yet) - in progress
+Look into new method for deal retrieve combinations - maybe a switch and not tons else if statements
 
 Finish add deal code, the code is there but has not been debugged or linked to a view yet
 
 Security review (better input sanitization, close site source - done)
 
 debug and optimize existing codebase - in progress
+
+there are MAJOR inconsistencies in the way the code is organized and structured, this all needs to be fixed
 
 Create membership system (home view, login system - done) - in progress, signup system complete
 The code for the membership system is a little hacked, clean up at some point
