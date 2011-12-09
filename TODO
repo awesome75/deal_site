@@ -10,7 +10,7 @@ Security review (better input sanitization, close site source - done)
 
 debug and optimize existing codebase - in progress
 
-Create membership system (home view, login system) - in progress, signup system complete
+Create membership system (home view, login system - done) - in progress, signup system complete
 The code for the membership system is a little hacked, clean up at some point
 
 Location tools (speed improvements, more features) - in progress

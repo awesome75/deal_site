@@ -144,8 +144,14 @@ class user {
     
     function login() {
         // we will try and login to the database with the selected information
-        
-    }
+        $sql = sprintf("SELECT COUNT(*) FROM `users` WHERE `user_name` = '%s' AND `password` = '%s'", $this->user_name, hashNsalt($this->password));
+        $con = getSQLConnection('deal_site');
+        $res = mysql_result(mysql_query($sql, $con), 0);
+        // close our mysql connection
+        mysql_close($con);
+        // return the count to the calling script
+        return $res;
+   }
 }
 
 class company {
