@@ -70,6 +70,17 @@ function addUser($user) {
     // takes a passed user object and adds it to the DB
     // returns 1 or 0 for success or fail
     $con = getSQLConnection('deal_site');
+    // first we need to determine if the user name is already taken
+    // we will deprecate this part because we will use AJAX on the field to verify before user submits form
+    $sql = "SELECT COUNT(*) FROM `users` WHERE `user_name` = '" . $user->user_name . "'";
+    $res = mysql_result(mysql_query($sql, $con), 0);
+    if ($res == 1) {
+        // the user exists in the DB, I am afraid we can't allow that
+        return 'fail:user';
+    }
+    
+    
+    // if we are still running then I guess we can add the user
     $sql = 
         "INSERT INTO `users` (user_name,password,ip_address,location,email_address) " . 
         //"cell_carrier,cell_nummber) " .
@@ -78,10 +89,14 @@ function addUser($user) {
         ")";
     $result = mysql_query($sql, $con); //user registration enabled for now
     if ($result == true) {
-        return 1;   
+        // this means we can get the user's new ID and update our object
+        // we do this using their new user name for our identifier
+        $sql = "SELECT `user_id` FROM `users` WHERE `user_name` = '" . $user -> user_name . "'";
+        $user -> user_id = mysql_result(mysql_query($sql, $con), 0);
+        return 1;
     }
     else {
-        return 0;   
+        // we will add code for handling problems later
     }
     // close our SQL connection
     mysql_close($con);

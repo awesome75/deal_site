@@ -4,11 +4,12 @@ Create HTML to display results of back end code (various views need to be create
 
 Finish deal retrieval system (location search not working yet) - in progress
 
-Security review (better input sanitization, close site source)
+Security review (better input sanitization, close site source - done)
 
 debug and optimize existing codebase - in progress
 
-Create membership system (SQL table, home view, login system)
+Create membership system (SQL table, home view, login system) - in progress, signup system complete
+The code for the membership system is a little hacked, clean up at some point
 
 Location tools (speed improvements, more features) - in progress
 
@@ -18,4 +19,4 @@ Make algorithm to rank comments, to help give better data to DealRank algorithm
 
 Create mobile site (we will forget about native mobile apps for now)
 
-Rewrite site in Python
+Rewrite site in Python (or possibly node, we are looking into it)

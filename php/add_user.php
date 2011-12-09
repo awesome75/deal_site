@@ -29,6 +29,16 @@ $user -> deal_post_count = 0;
 $con = getSQLConnection('deals_site');
 if (checkSignupCode($_POST['signup_code']) == 'good') {
     $result = addUser($user);
+    if ($result == 'fail:user') {
+           $failed = 'username';
+    }
+    // also we need to retrieve their new ID and update the signup_code table
+    // to say that this code has been used by this user
+    if (!$failed) {
+        // we don't want to mark their code as redeemed if they weren't able to register for some reason
+        $sql = "UPDATE `signup_codes` SET `redeemed` = '1', `user_id` = '" . $user -> user_id . "' WHERE `code` = '" . SQLClean($_POST['signup_code']) . "'";
+        $res = mysql_query($sql, getSQLConnection('deal_site'));
+    }
 }
 else {
     $failed = 'code';
