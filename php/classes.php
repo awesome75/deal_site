@@ -141,6 +141,11 @@ class user {
     function geoCode($ip_address) {
         // get the coordinates
     }
+    
+    function login() {
+        // we will try and login to the database with the selected information
+        
+    }
 }
 
 class company {
