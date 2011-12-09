@@ -4,11 +4,13 @@ Create HTML to display results of back end code (various views need to be create
 
 Finish deal retrieval system (location search not working yet) - in progress
 
+Finish add deal code, the code is there but has not been debugged or linked to a view yet
+
 Security review (better input sanitization, close site source - done)
 
 debug and optimize existing codebase - in progress
 
-Create membership system (SQL table, home view, login system) - in progress, signup system complete
+Create membership system (home view, login system) - in progress, signup system complete
 The code for the membership system is a little hacked, clean up at some point
 
 Location tools (speed improvements, more features) - in progress
