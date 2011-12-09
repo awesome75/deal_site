@@ -226,9 +226,24 @@ h1,h2,h3 {
     background: #DFEEE0;
 }
 
+#login_box {
+    width: 80%;
+    height: auto
+    text-align: center;
+    //margin: 10px 0 0 50px;
+    padding: 20px 0px 0px 0px;
+    text-align: center;  
+}
 
-
-
+#login_box input {
+    width: 200px;;
+    height: 30px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    color: #284F31;
+    font-weight: bold;
+    padding: 3px 3px 3px 5px;   
+}
 
 
 

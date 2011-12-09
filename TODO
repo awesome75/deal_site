@@ -2,6 +2,10 @@ TODO list for the site:
 
 Create HTML to display results of back end code (various views need to be created) - in progress
 
+Validate all HTML and CSS 
+
+Add more semantic markup with HTML5
+
 Finish deal retrieval system (location search not working yet) - in progress
 
 Finish add deal code, the code is there but has not been debugged or linked to a view yet

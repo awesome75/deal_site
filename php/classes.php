@@ -102,11 +102,7 @@ class user {
     var $cell_number;
     var $deal_post_count;
     // declare the methods the user is capable of
-    
-    function addDeal() {
-        // this is how we will call the add_deal.php script from our user object    
-    }
-    
+        
     function getDealCount() {
         // this function will get the acmount of deals the user has posted
         $con = getSQLConnection('deals_Site');
@@ -137,10 +133,6 @@ class user {
         mysql_close();
         return $res;
     }      
-    
-    function geoCode($ip_address) {
-        // get the coordinates
-    }
     
     function login() {
         // we will try and login to the database with the selected information

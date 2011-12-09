@@ -11,8 +11,24 @@ if ($_POST['user'] && $_POST['password']) {
     $user -> password = SQLClean($_POST['password']);
     // now we can attempt to login and see what happens
     $login_attempt = $user -> login();
-    echo $login_attempt;
+    // we should probably handle the return from the function
+    
 }
 // if we aren't worried about attempting a login, display the login view
+$ptitle = "Login";
+include('html/header.html');
+?>
+<style>
+#deals_container {
+    width: 100%;
+    text-align: justify;
+}
+</style>
+<?
+include('html/deals_container.html');
+// this is where we will inlcude our login.html code
 include('html/login.html'); // should be as simple as including the view :)
+// now we will finish out the page
+closeSidebar();
+include('html/footer.html');
 ?>
