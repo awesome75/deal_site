@@ -23,7 +23,10 @@ include('html/header.html');
 include('html/deals_container.html');
 // signup content
 if ($user_added == 1) {
-    echo "user adding was attempted";
+}
+
+if ($failed == 'code') {
+    echo "<h1>sorry :(</h1>you must have a valid sign up code to use the beta site";
 }
 
 else {

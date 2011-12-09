@@ -135,6 +135,20 @@ h1,h2,h3 {
     font-size: 28px;
 }
 
+.deal_title a:link {
+    color: #31270E;
+    text-decoration: none;
+}
+
+.deal_title a:visited {
+    color: #31270E;
+    text-decoration: none;
+}
+
+.deal_title a:hover {
+    border-bottom: 2px solid #31270E;   
+}
+
 .byline {
     font-weight: bold;
 }

@@ -76,7 +76,7 @@ function addUser($user) {
         "VALUES ('$user->user_name','$user->password','$user->ip_address','$user->location'," .
         "'$user->email_address'" . //,$user->cell_carrier,$user->cell_number" .
         ")";
-    //$result = mysql_query($sql, $con); user registration disabled for now
+    $result = mysql_query($sql, $con); //user registration enabled for now
     if ($result == true) {
         return 1;   
     }
@@ -214,6 +214,21 @@ function filterID($id) {
     // this is for numeric IDs, obviously
     preg_match('([\d]+)', $id, $matches);
     return $matches[0];
+}
+
+function checkSignupCode($code) {
+    // see if the user is attempting to register with a valid code
+    $sql = "SELECT COUNT(*) FROM `signup_codes` WHERE `code` = '". SQLClean($code) . "' AND `redeemed` = 0";
+    $con = getSQLConnection('deal_site');
+    $res = mysql_result(mysql_query($sql, $con), 0);
+    if ($res == 1) {
+        // this means the code is available to use and we are good to go
+        return 'good';
+    }
+    else {
+        return 'bad';   
+    }
+    mysql_close($con);
 }
 
 ?>

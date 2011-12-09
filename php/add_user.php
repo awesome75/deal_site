@@ -27,7 +27,12 @@ $user -> email_address = $email;
 $user -> deal_post_count = 0;
 // user object built. let's insert it now
 $con = getSQLConnection('deals_site');
-$result = addUser($user);
+if (checkSignupCode($_POST['signup_code']) == 'good') {
+    $result = addUser($user);
+}
+else {
+    $failed = 'code';
+}
 //return $result; not wrapped yet
 // clean up
 mysql_close($con);
