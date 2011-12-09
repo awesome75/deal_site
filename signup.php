@@ -32,6 +32,9 @@ else if ($failed == 'username') {
 
 else if ($result == 1) {
     // this means the user made it to the DB
+    echo sprintf("<h1>welcome %s!</h1>", $user -> user_name);
+    echo "You're good to go! Head over to your home page to start checking out all the best" .
+         " deals in your area, or post the deals you already know for others to check out!";
 }
 
 else {
