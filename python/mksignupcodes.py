@@ -64,7 +64,7 @@ class generateCodes:
 		con.close();
 
 def main():
-	codes = generateCodes('localhost', 'deal', '9S8X6NxYNMMsBbFL', 'deal_site');
+	codes = generateCodes('localhost', 'deal', 'passwd', 'deal_site');
 	codes.generateCodes(first_run='yes');
 	codes.insertCodes();
 
