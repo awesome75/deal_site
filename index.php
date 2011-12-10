@@ -29,7 +29,9 @@ include('html/sidebar_left.html'); // already closed in the code
 </style>
 <?
 include('html/deals_container.html');
-include('html/add_deal_button.html');
+if (!$_GET['deal_id']){
+    include('html/add_deal_button.html');
+}
 // deals will go here
 // if there is a tag set let's get those deals
 if ($tag) {

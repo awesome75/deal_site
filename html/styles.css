@@ -118,6 +118,11 @@ h1,h2,h3 {
     position: relative;
 }
 
+#add_deal:hover {
+    -webkit-box-shadow: 0 0 5px 5px #aad874;
+    cursor: pointer;
+}
+
 .deal {
     //display: inline-block;
     //width: 95%;
@@ -254,7 +259,38 @@ h1,h2,h3 {
     border-radius: 5px;
 }
 
+#add_deal_box {
+    background: white;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 0 25px 15px #aad874;
+    text-align: center;
+    width: 40%;
+    height: auto;
+    //min-height: 42%;
+    position: absolute;
+    top: 29%;
+    left: 30%;
+    padding: 20px;
+}
 
+#add_deal_box input, select {
+    width: 90%;
+    height: 20px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    color: #284F31;
+    font-weight: bold;
+    padding: 3px 3px 3px 5px;        
+}
 
+#add_deal_box textarea {
+    width: 90%;
+    height: 100px;
+    margin-bottom: 10px;
+    //border-radius: 10px;
+    color: #284F31;
+    font-weight: bold;
+    padding: 3px 3px 3px 5px; 
+}
 
 

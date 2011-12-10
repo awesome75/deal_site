@@ -29,7 +29,7 @@ foreach ($deals as $deal) {
                         <?
                             // need to determine if this is a deal with no end, like taco tuesday
                             // if the date is unix epoc, then we will assume the deal runs forever
-                            if (date('Y', strtotime($deal->deal_end_date)) == '1970') {
+                            if (date('Y', strtotime($deal->deal_end_date)) == '1969') {
                                 // simple enough as you see, if 1970 is the year obviously no date was defined
                                 echo "Indefinite";
                             }
