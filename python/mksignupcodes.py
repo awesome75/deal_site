@@ -5,13 +5,6 @@
 from random import randint as rand;
 import MySQLdb as mysql;
 
-class code:
-	# our code object to track the id and string for each code
-	def __init__(self, code, code_id):
-		self.code = code;
-		self.code_id = code_id;
-
-
 class generateCodes:
 	# generate codes for the site, we will use a simple method to make the codes:
 	# we will generate 3 random letters, then three random numbers
