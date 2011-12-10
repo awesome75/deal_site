@@ -3,46 +3,92 @@
 // this will be the script that handles adding a deal
 require_once('functions.php');
 require_once('classes.php');
-// first let's collect and sanitize the POST variables that should contain our deal data
-$deal_title = SQLClean($_POST['deal_title']);
-// $deal_poster_id = ; decide how you want to do that one before we define it here
-$deal_price = SQLClean($_POST['deal_price']);
-$deal_post_date = SQLClean($_POST['deal_post_date']); // will actually be a SQL TIMESTAMP, ignore line
-$deal_end_date = SQLClean($_POST['deal_end_date']);
-$deal_text = SQLClean($_POST['deal_text']);
-$deal_location = SQLClean($_POST['deal_location']);
-$deal_photo = SQLClean($_POST['deal_photo']);
-$tags = SQLClean($_POST['tags']);
-$views = 0; // initially this is obviously a zero field
-$thumbs_up = 0;
-$thumbs_down = 0;
-$verified_deal = false; // at first it will never be verified, so false
-$algo_ranking = null; // this is not implemented yet, need to make the DealRank algorithm
-$thanks_count = 0; // another 0 initial value
-// let's get our deal to be a class of it's own
+// get our SQL connection
+$con = getSQLConnection('deal_site');
+// before we build the deal object there are some things we need to know
+// we need to get the company and tag id's that we will be adding, plus make sure we have a user 
+// object to reference as the person adding the deal
+if (!$user -> user_id) {
+    // they are probably not logged in, we will not continue with adding a deal   
+    die('fail:login');
+}
+// now we know we will be able to add a poster to the deal, so let's get the company id this deal goes to
+$company = SQLClean($_POST['company']);
+$sql = sprintf("SELECT * FROM `company` WHERE `company_name` = '%s'", $company);
+$res = mysql_query($sql, $con);
+if ($res) {
+    $company = new company();
+    while ($row = mysql_fetch_array($res)) {
+        $company -> id = $row['company_id'];
+        /* We won't need these for now
+        $company -> name = $row['company_name'];
+        $company -> algo_rank = $row['company_algo_rank'];
+        $company -> about = $row['company_about'];
+        $company -> address = $row['company_address'];
+        $company -> thumbs_up = $row['company_thumbs_up'];
+        $company -> thumbs_down = $row['company_thumbs_down
+        */
+    }
+    var_dump($company); // see what we got
+}
+// now let's get the tag id's we will need 
+$tag_strings = $_POST['tags']; // they will be cleaned individually
+try {
+    $tag_strings = explode(', ', $tag_strings); // they should have came all nice from the user
+}
+catch($e) {
+    // we will assume that the user provided tags like a goon and we can't parse them
+    // we'll add code to attempt to handle this
+    unset($tag_strings);
+}
+// we must go through each tag and attempt to find it's ID
+$i = 0;
+foreach ($tag_strings as $tag_string) {
+    $tag = new tag();
+    $tag -> text = SQLClean($tag_string);
+    $tag -> getID(); // handy methods ftw
+    if ($tag -> is_new == 1) { // getID() sets this property after it runs so we will know 
+        // let's introduce it to the DB
+        $tag -> addTag(); // method will auto update id, not need to call getID() again
+    }
+    // after this tag object if fully instantiated
+    $tags[$i] = $tag;
+    $i++;
+}
+// tags should be taken care of and fully accessable via the $tags object array
+// we need to get the location information now
+if ($_POST['address']) {
+    // we will turn this address into geocode we can use
+    $coords = getCoords($_POST['address']);
+    $coords = explode(',', $coords);
+    $lat = $coords[0];
+    $lng = $coords[1];
+}
+// we have all the information we will need for now, 
+// let's instantiate our deal object
 $deal = new deal();
 // populate the new deal onject's properties with their respective values
 $deal -> deal_id = null; // this won't exist until aftet the INSERT operation 
-$deal -> deal_title = $deal_title;
-$deal -> deal_poser_id = $deal_poster_id;
-$deal -> deal_price = $deal_price;
-$deal -> deal_post_date = $deal_post_date; // we will use TIMESTAMP instead
-$deal -> deal_end_date = $deal_end_date; // this will need to be date formatted before it is useful, don't forget
-$deal -> deal_tect = $deal_text;
-$deal -> deal_location = $deal_location;
-$deal -> deal_photo = $deal_photo; // probably going to be a file object $_FILES[0], type check and all that
-$deal -> tags = deal -> separateTags($tags); // explodes the tags
-$deal -> views = $views; // should be 0
-$deal -> thumbs_up = $thumbs_up; // should be 0
-$deal -> thumbs_down = $thumbs_down; // another 0
-$deal -> verified_deal = $verified_deal; // should be false
-$deal -> algo_ranking = $algo_ranking; // null for now, no algorithm yet
-$deal -> thanks_count = $thanks_count; // should be 0
+$deal -> deal_title = SQLClean($_POST['deal_title']);
+$deal -> deal_poster_id = $user -> user_id;
+$deal -> company_id = $company -> id;
+$deal -> deal_price = SQLClean($_POST['price']);
+$deal -> deal_end_date = SQLCLean($_POST['end_date']);
+$deal -> deal_text = SQLClean($_POST['deal_text']);
+$deal -> deal_latitude = $lat;
+$deal -> deal_longitude = $lng;
+$deal -> deal_photo = null; // we have not implemented this feature yet`
+$deal -> tags = $tags; // we will store the entire tag object array here
+$deal -> views = 0;
+$deal -> thumbs_up = 0;
+$deal -> thumbs_down = 0;
+$deal -> verified_deal = 0;
+$deal -> algo_ranking = 0;
+$deal -> thanks_count = 0;
+$deal -> active = 1;
 // now we have the deal object, pass it to the insert function
-// get our SQL connection
-$con = getSQLConnection('deal_site');
 $result = addDeal($deal); // takes a deal object 
-return $result; // return the result of the operation to the script that requested it
+///return $result; // return the result of the operation to the script that requested it
 // clean up
 // close out our SQL connection
 mysql_close($con);

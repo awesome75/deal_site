@@ -67,6 +67,7 @@ class deal {
         return $output[0]; // looks like '1435 Pearl St, Denver, CO 80203, USA'
     }
     
+    
 // end of class    
 }
 
@@ -320,6 +321,13 @@ class tag {
         mysql_close($con);
         // just in case the calling script needs it
         return $this -> id;
+    }
+    
+    function addTag() {
+        // we will be adding this tag to the database for future use
+        
+        // now that we have the object in the DB call getID() to update object
+        $this -> getID();
     }
     
 }

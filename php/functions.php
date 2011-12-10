@@ -6,15 +6,19 @@ include('functions_secure.php'); // our non public functions
 function getSQLConnection($db) {
     //very simple, we just need to get a connection to the specified database   
     //$con = mysql_connect('localhost', 'user', 'password'); // didn't think I would put creds in the public repo did you??? XD 
-    $con = sgetSQLConnection($db);
+    if (!$con) {
+        $con = sgetSQLConnection($db);
+    }
     return $con;
 }
 
 function SQLClean($val) {
     // sanitize the values that go into the DB
     // probably build some error check into this function at some point lol
-    $con = getSQLConnection('deal_site');
-    $val = htmlspecialchars(mysql_real_escape_string($val));
+    if (!$con) {
+        $con = getSQLConnection('deal_site');
+    }
+    $val = htmlspecialchars(mysql_real_escape_string(trim($val)));
     mysql_close($con);
     return $val;
 }
