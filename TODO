@@ -9,7 +9,9 @@ Add more semantic markup with HTML5
 Finish deal retrieval system (location search not working yet) - in progress
 Look into new method for deal retrieve combinations - maybe a switch and not tons else if statements
 
-Finish add deal code, the code is there but has not been debugged or linked to a view yet
+Finish add deal code, the code is mostly debugged and has been rewritten. (we are still lacking the add deal view)
+
+Create mobile site (we will forget about native mobile apps for now)
 
 Security review (better input sanitization, close site source - done)
 
@@ -25,7 +27,5 @@ Location tools (speed improvements, more features) - in progress
 Make a algorithm to rank deals based on votes, user status, and comment analysis (DealRank)
 
 Make algorithm to rank comments, to help give better data to DealRank algorithm
-
-Create mobile site (we will forget about native mobile apps for now)
 
 Rewrite site in Python (or possibly node, we are looking into it)
