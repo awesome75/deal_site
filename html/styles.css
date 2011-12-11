@@ -278,8 +278,9 @@ h1,h2,h3 {
     width: 90%;
     height: 20px;
     margin-bottom: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     color: #284F31;
+    border: 1px solid #284F31;
     font-weight: bold;
     padding: 3px 3px 3px 5px;        
 }
@@ -288,7 +289,7 @@ h1,h2,h3 {
     width: 90%;
     height: 100px;
     margin-bottom: 10px;
-    //border-radius: 10px;
+    border-radius: 5px;
     color: #284F31;
     font-weight: bold;
     padding: 3px 3px 3px 5px; 

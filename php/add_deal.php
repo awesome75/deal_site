@@ -87,7 +87,7 @@ $deal -> algo_ranking = 0;
 $deal -> thanks_count = 0;
 $deal -> active = 1;
 // now we have the deal object, pass it to the insert function
-$result = addDeal($deal); // takes a deal object 
+//$result = addDeal($deal); // takes a deal object 
 ///return $result; // return the result of the operation to the script that requested it
 // clean up
 // close out our SQL connection
