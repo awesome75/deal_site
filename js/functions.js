@@ -49,7 +49,7 @@ function setInputVal(name, val) {
 
 function addDealInput(name, type, val) {
     var input;
-    if (type == 'text' || type == 'password') {
+    if (type == 'text') {
         input = document.createElement('input');
     }
     else if (type == 'textarea') {
@@ -58,9 +58,12 @@ function addDealInput(name, type, val) {
     else if (type == 'select') {
         input = document.createElement('select');   
     }
+    else if (type == 'button') {
+        input = document.createElement('button');   
+    }
     input.name = name;
     input.type = type;
-    if (type == 'textarea') {
+    if (type == 'textarea' || type == 'button') {
         input.innerHTML = val;   
     }
     else {
@@ -73,6 +76,13 @@ function addDealInput(name, type, val) {
 function displayAddDeal() {
     // display the add deal box with the various inputs etc
     // we will do the whole web 2.0ish background fade same window popup deal nonsense 
+    // kill the lights
+    dim = document.createElement('div');
+    dim.id = "dim_page";
+    dim.innerHTML = "&nbsp;";
+    dim.onclick = function(){document.body.removeChild(dim);document.body.removeChild(div);};
+    document.body.appendChild(dim);
+    // create the markup
     div = document.createElement('div');
     div.id = "add_deal_box";
     // we need to build the inputs
@@ -83,6 +93,7 @@ function displayAddDeal() {
     end_date = addDealInput('end_date', 'text', 'End Date..');
     deal_text = addDealInput('deal_text', 'textarea', 'About Deal..');
     address = addDealInput('address', 'text', 'Address..');
+    submit = addDealInput('submit', 'button', 'Add Deal');
     // let's try adding these to the div
     div.appendChild(title);
     div.appendChild(company);
@@ -90,6 +101,7 @@ function displayAddDeal() {
     div.appendChild(end_date);
     div.appendChild(deal_text);
     div.appendChild(address);
+    div.appendChild(submit);
     // once we're all done add the box to the page
     document.body.appendChild(div);
 }
