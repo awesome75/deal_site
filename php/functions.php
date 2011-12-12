@@ -26,25 +26,30 @@ function SQLClean($val) {
 function addDeal($deal) {
     // add the passed deal object to the deals DB
     // returns a 0 or 1 as result of insert operation to the calling script
+    //var_dump($user);
+    $con = getSQLConnection('deal_site');
     $sql = 
         "INSERT INTO `deals` (deal_title,deal_poster_id,deal_price," . 
-        "deal_post_date,deal_end_date,deal_text,deal_location,deal_photo," . 
+        "deal_end_date,deal_text,deal_location,deal_photo," . 
         "tags,views,thumbs_up,thumbs_down,verified_deal,algo_ranking,thanks_count) " .
         "VALUES (" .
-        "$deal->deal_title,$deal->deal_poster_id,$deal->deal_price," .
-        "$deal->deal_post_date,$deal->deal_end_date,$deal->deal_text," .
-        "$deal->deal_location,$deal->deal_photo,$deal->tags,$deal->views," .
+        "'$deal->deal_title',$deal->deal_poster_id,'$deal->deal_price'," .
+        "'$deal->deal_end_date','$deal->deal_text'," .
+        "'$deal->deal_location','$deal->deal_photo','$deal->tags','$deal->views'," .
         "$deal->thumbs_up,$deal->thumbs_down,$deal->verified_deal,$deal->algo_ranking," .
         "$deal->thanks_count" .
         ")";
+    echo $sql;
     // now with the query ready to go let's get moving
     // the calling script should have already opened a MySQL connection
-    $result = mysql_query($sql);
+    $result = mysql_query($sql, $con);
+    // close the mysql connection
+    mysql_close($con);
     if ($result == true) {
-        return 1;   
+        return 'success';   
     }
     else {
-        return 0;   
+        return 'fail';   
     }
 }
 

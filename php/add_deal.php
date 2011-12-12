@@ -10,7 +10,9 @@ $con = getSQLConnection('deal_site');
 // object to reference as the person adding the deal
 if (!$user -> user_id) {
     // they are probably not logged in, we will not continue with adding a deal   
-    die('fail:login');
+    //die('fail:login');
+    $user = new user();
+    $user -> user_id = 11;
 }
 // now we know we will be able to add a poster to the deal, so let's get the company id this deal goes to
 $company = SQLClean($_POST['company']);
@@ -29,14 +31,13 @@ if ($res) {
         $company -> thumbs_down = $row['company_thumbs_down
         */
     }
-    var_dump($company); // see what we got
 }
 // now let's get the tag id's we will need 
 $tag_strings = $_POST['tags']; // they will be cleaned individually
 try {
     $tag_strings = explode(', ', $tag_strings); // they should have came all nice from the user
 }
-catch($e) {
+catch(Exception $e) {
     // we will assume that the user provided tags like a goon and we can't parse them
     // we'll add code to attempt to handle this
     unset($tag_strings);
@@ -78,7 +79,7 @@ $deal -> deal_text = SQLClean($_POST['deal_text']);
 $deal -> deal_latitude = $lat;
 $deal -> deal_longitude = $lng;
 $deal -> deal_photo = null; // we have not implemented this feature yet
-$deal -> tags = $tags; // we will store the entire tag object array here
+$deal -> tags = $tags; 
 $deal -> views = 0;
 $deal -> thumbs_up = 0;
 $deal -> thumbs_down = 0;
@@ -87,7 +88,9 @@ $deal -> algo_ranking = 0;
 $deal -> thanks_count = 0;
 $deal -> active = 1;
 // now we have the deal object, pass it to the insert function
-//$result = addDeal($deal); // takes a deal object 
+//var_dump($deal);
+$result = addDeal($deal); // takes a deal object 
+echo $result;
 ///return $result; // return the result of the operation to the script that requested it
 // clean up
 // close out our SQL connection

@@ -50,27 +50,28 @@ function setInputVal(name, val) {
 function submitDeal() {
     // so the time is here, let's add this thing
     // first we need to get all of the elements we will need
-    title = document.getElementsByName('title')[0];
-    company = document.getElementsByName('company')[0];
-    price = document.getElementsByName('price')[0];
-    end_date = document.getElementsByName('end_date')[0];
-    deal_text = document.getElementsByName('deal_text')[0];
-    address = document.getElementsByName('address')[0];
-    tags = document.getElementsByName('tags')[0];
+    title = document.getElementsByName('title')[0].value;
+    company = document.getElementsByName('company')[1].value;
+    price = document.getElementsByName('price')[0].value;
+    end_date = document.getElementsByName('end_date')[0].value;
+    deal_text = document.getElementsByName('deal_text')[0].value;
+    address = document.getElementsByName('address')[0].value;
+    tags = document.getElementsByName('tags')[0].value;
     // now we need to get ready to submit a post request to the handler script
     req = getXmlHttp();
     req.onreadystatechange = function() {
-        if (req.readyState == 4) {
+        if (req.readyState == 4) {   
             if (req.status == 200) {
-                alert(res.responseText.trim());   
+                console.log(req.responseText.trim());   
             }
         }
     };
     url = "php/add_deal.php";
-    params = "";
+    params = "deal_title="+title+"&company="+company+"+&price="+price+"&end_date="+end_date+"&deal_text="+deal_text+"&address="+address+"&tags="+tags;
     req.open('POST', url, true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.send(params);
-    
+    console.log('Tried to add deal..');
 }
 
 function alertValidateFail(input) {
