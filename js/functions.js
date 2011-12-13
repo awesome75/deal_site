@@ -47,6 +47,13 @@ function setInputVal(name, val) {
 	input.value = val;
 }
 
+function validateDate(date_str) {
+    // validate a date passed to the function, return 0 or 1 for fail or success respectively
+    
+}
+
+// seperate these into seperate modules, functions.js is getting too crowded
+
 function submitDeal() {
     // so the time is here, let's add this thing
     // first we need to get all of the elements we will need
@@ -196,6 +203,33 @@ function addDealInput(name, type, val) {
                     }
                 }
                 break;
+            
+            // start_date onblur stuff
+            case 'start_date':
+                if (input.value.toLowerCase().indexOf('any') != -1) {
+                    input.value = "any";
+                }
+                else if (input.value == 'Start date..') {
+                    // the user never attempted to change the date
+                    input.value = "any";
+                }
+                else if (input.value.toLowerCase().indexOf('now') != -1) {
+                    input.value = "any";   
+                }
+                else if (input.value.trim() == '') {
+                    // they blanked it out
+                    input.value = "any";
+                }
+                // now the case where eval dates
+                else {
+                    // this means we should attempt to parse and verify this date
+                    validateDate(input.value);
+                }
+                    
+                // end of start_date onblur functions
+                break;
+                
+            
         }
     };
     // end of onblur functions
