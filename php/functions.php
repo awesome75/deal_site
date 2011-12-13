@@ -19,30 +19,39 @@ function SQLClean($val) {
         $con = getSQLConnection('deal_site');
     }
     $val = htmlspecialchars(mysql_real_escape_string(trim($val)));
-    mysql_close($con);
+    //mysql_close($con);
     return $val;
 }
 
 function addDeal($deal) {
     // add the passed deal object to the deals DB
     // returns a 0 or 1 as result of insert operation to the calling script
-    //var_dump($user);
+    
+    // now we can move on to our SQL query
     $con = getSQLConnection('deal_site');
     $sql = 
-        "INSERT INTO `deals` (deal_title,deal_poster_id,deal_price," . 
-        "deal_end_date,deal_text,deal_location,deal_photo," . 
-        "tags,views,thumbs_up,thumbs_down,verified_deal,algo_ranking,thanks_count) " .
+        "INSERT INTO `deals`" . 
+        "(deal_poster_id, company_id, deal_title, " .
+        "deal_price, deal_start_date, " .
+        "deal_end_date, deal_text, deal_latitude, " .
+        "deal_longitude, deal_photo, deal_tags) " .
         "VALUES (" .
-        "'$deal->deal_title',$deal->deal_poster_id,'$deal->deal_price'," .
-        "'$deal->deal_end_date','$deal->deal_text'," .
-        "'$deal->deal_location','$deal->deal_photo','$deal->tags','$deal->views'," .
-        "$deal->thumbs_up,$deal->thumbs_down,$deal->verified_deal,$deal->algo_ranking," .
-        "$deal->thanks_count" .
+        "'%s', '%s', '%s', " .
+        "'%s', '%s', " .
+        "'%s', '%s', '%s', " .
+        "'%s', '%s', '%s'" .
         ")";
+    $sql = sprintf($sql,
+            $deal->deal_poster_id, $deal->company_id, $deal->deal_title,
+            $deal->deal_price, $deal->deal_start_date,
+            $deal->deal_end_date, $deal->deal_text, $deal->deal_latitude,
+            $deal->deal_longitude, $deal->deal_photo, $deal->tags
+           );
+    
     echo $sql;
     // now with the query ready to go let's get moving
     // the calling script should have already opened a MySQL connection
-    $result = mysql_query($sql, $con);
+    //$result = mysql_query($sql, $con);
     // close the mysql connection
     mysql_close($con);
     if ($result == true) {

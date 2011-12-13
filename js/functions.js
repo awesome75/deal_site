@@ -53,6 +53,7 @@ function submitDeal() {
     title = document.getElementsByName('title')[0].value;
     company = document.getElementsByName('company')[1].value;
     price = document.getElementsByName('price')[0].value;
+    start_date = document.getElementsByName('start_date')[0].value;
     end_date = document.getElementsByName('end_date')[0].value;
     deal_text = document.getElementsByName('deal_text')[0].value;
     address = document.getElementsByName('address')[0].value;
@@ -77,7 +78,7 @@ function submitDeal() {
 function alertValidateFail(input) {
     // we need to alert of failed validation to the user
     input.setAttribute('style', 'border: 1px solid red;');
-    input.onclick = function() {
+    input.onfocus = function() {
         input.setAttribute('style', 'border: 1px solid #284F31;');   
     };
 }
@@ -218,6 +219,7 @@ function displayAddDeal() {
     title = addDealInput('title', 'text', 'Deal Title..');
     company = addDealInput('company', 'text', 'Company..');
     price  = addDealInput('price', 'text', 'Price..'); // we'll populate options later
+    start_date = addDealInput('start_date', 'text', 'Start date..');
     // figure out how we want to set this in the layout
     end_date = addDealInput('end_date', 'text', 'End date..');
     deal_text = addDealInput('deal_text', 'textarea', 'About deal..');
@@ -232,6 +234,7 @@ function displayAddDeal() {
     div.appendChild(title);
     div.appendChild(company);
     div.appendChild(price);
+    div.appendChild(start_date);
     div.appendChild(end_date);
     div.appendChild(deal_text);
     div.appendChild(address);

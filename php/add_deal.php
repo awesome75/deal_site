@@ -15,21 +15,19 @@ if (!$user -> user_id) {
     $user -> user_id = 11;
 }
 // now we know we will be able to add a poster to the deal, so let's get the company id this deal goes to
-$company = SQLClean($_POST['company']);
-$sql = sprintf("SELECT * FROM `company` WHERE `company_name` = '%s'", $company);
+$company_name = SQLClean($_POST['company']);
+$sql = sprintf("SELECT * FROM `companies` WHERE `company_name` = '%s'", $company_name);
 $res = mysql_query($sql, $con);
 if ($res) {
     $company = new company();
     while ($row = mysql_fetch_array($res)) {
         $company -> id = $row['company_id'];
-        /* We won't need these for now
         $company -> name = $row['company_name'];
         $company -> algo_rank = $row['company_algo_rank'];
         $company -> about = $row['company_about'];
         $company -> address = $row['company_address'];
         $company -> thumbs_up = $row['company_thumbs_up'];
-        $company -> thumbs_down = $row['company_thumbs_down
-        */
+        $company -> thumbs_down = $row['company_thumbs_down'];
     }
 }
 // now let's get the tag id's we will need 
@@ -54,8 +52,17 @@ foreach ($tag_strings as $tag_string) {
     }
     // after this tag object if fully instantiated
     $tags[$i] = $tag;
+    if ($i == 0) {
+        $tags_id_string = $tag -> id;   
+    }
+    else {
+        $tags_id_string .= "," . $tag -> id;   
+    }
     $i++;
+    // $tags_id_string is what we will actually put into the DB
+    // we just instantiate the object for the purpose of using it's methods
 }
+echo $tags_id_string;
 // tags should be taken care of and fully accessable via the $tags object array
 // we need to get the location information now
 if ($_POST['address']) {
@@ -79,7 +86,7 @@ $deal -> deal_text = SQLClean($_POST['deal_text']);
 $deal -> deal_latitude = $lat;
 $deal -> deal_longitude = $lng;
 $deal -> deal_photo = null; // we have not implemented this feature yet
-$deal -> tags = $tags; 
+$deal -> tags = $tags_id_string; 
 $deal -> views = 0;
 $deal -> thumbs_up = 0;
 $deal -> thumbs_down = 0;
