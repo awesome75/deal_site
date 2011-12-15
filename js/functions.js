@@ -47,20 +47,26 @@ function setInputVal(name, val) {
 	input.value = val;
 }
 
-function validateDate(date_str) {
+function validateDate(input) {
     // validate a date passed to the function, return 0 or 1 for fail or success respectively
     // I didn't want to do this but PHP is honestly much more robust for this date checking business thanks to
     // strtotime(), seriously that function will save your life
-    req = getXmlHttp();
+    var req = getXmlHttp();
+    var resp;
     req.onreadystatechange = function() {
         if (req.readyState == 4) {
             if (req.status == 200) {
                 resp = req.responseText.trim();
-                console.log(resp);
+                if (resp == 'fail') {
+                    alertValidateFail(input);   
+                }
+                else {
+                    input.value = resp;   
+                }
             }
         }
     };
-    url = "php/helpers.php?do=validate_date&date=" + date_str;
+    url = "php/helpers.php?do=validate_date&date=" + input.value;
     req.open('GET', url, true);
     req.send(null);
 }
@@ -244,7 +250,7 @@ function addDealInput(name, type, val) {
                 // now the case where eval dates
                 else {
                     // this means we should attempt to parse and verify this date
-                    validateDate(input.value);
+                    validateDate(input);
                 }
                     
                 // end of start_date onblur functions
@@ -266,10 +272,11 @@ function addDealInput(name, type, val) {
                         input.value = 'indefinite';
                         break;
                     }
+                    else {
+                        validateDate(input);   
+                    }
                 }
                 // if we are still running after the loop then we will(attempt to) validate this
-                validateDate(input.value);
-                // end of end_date onblur functions
                 break;
             
             // deal about onbur stuff
@@ -286,13 +293,28 @@ function addDealInput(name, type, val) {
                         // same thing, not acceptable input
                         alertValidateFail(input);
                     }
-                }
-    
-            
-            
+                } 
         }
     };
     // end of onblur functions
+    // onload functions for inputs
+    input.onload = function() {
+        console.log('onload for: ' + input.name);
+        switch (input.name) {
+            case 'tags':
+                // we need to check to see if there is an auto add tag in the url
+                url = document.location;
+                if (url.indexOf('?tag') != -1) {
+                    // we can auto add a tag in the field for the user
+                    tag_pos = url.indexOf('?tag');
+                    tag = url.substr(tag_post + 5);
+                    input.value = tag + ", ";
+                }
+                break;
+        }
+        // end of onload switch statement for inputs
+    };
+    // end of the onload input functions
     // return the input element to the function
     return input;
 }
@@ -319,6 +341,13 @@ function displayAddDeal() {
     deal_text = addDealInput('deal_text', 'textarea', 'About deal..');
     address = addDealInput('address', 'text', 'Address..');
     tags = addDealInput('tags', 'text', 'Tags..');
+    url = document.location.href;
+    if (url.indexOf('?tag') != -1) { // see if we have a tag defined for the default
+        // we can auto add a tag in the field for the user
+        tag_pos = url.indexOf('?tag');
+        tag = url.substr(tag_pos + 5);
+        tags.value = tag + ", ";
+    }
     submit = document.createElement('input');
     submit.type = 'button';
     submit.value = "add deal";

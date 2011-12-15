@@ -282,12 +282,12 @@ function checkSignupCode($code) {
 
 function validateDate($date) {
     // validate a date string with strtotime()
-    echo strtotime($date);
-    if (strtotime($date)) {
-        return 1;   
+    if (date('y', strtotime($date)) == '69') {
+        // we don't have a valid date return 0
+        return 'fail';
     }
     else {
-        return 0;   
+        return date('m/d/y', strtotime($date));
     }
 }
 
