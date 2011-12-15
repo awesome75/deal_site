@@ -280,6 +280,17 @@ function checkSignupCode($code) {
     mysql_close($con);
 }
 
+function validateDate($date) {
+    // validate a date string with strtotime()
+    echo strtotime($date);
+    if (strtotime($date)) {
+        return 1;   
+    }
+    else {
+        return 0;   
+    }
+}
+
 ?>
 
 

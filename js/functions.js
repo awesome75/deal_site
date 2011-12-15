@@ -49,7 +49,20 @@ function setInputVal(name, val) {
 
 function validateDate(date_str) {
     // validate a date passed to the function, return 0 or 1 for fail or success respectively
-    
+    // I didn't want to do this but PHP is honestly much more robust for this date checking business thanks to
+    // strtotime(), seriously that function will save your life
+    req = getXmlHttp();
+    req.onreadystatechange = function() {
+        if (req.readyState == 4) {
+            if (req.status == 200) {
+                resp = req.responseText.trim();
+                console.log(resp);
+            }
+        }
+    };
+    url = "php/helpers.php?do=validate_date&date=" + date_str;
+    req.open('GET', url, true);
+    req.send(null);
 }
 
 // seperate these into seperate modules, functions.js is getting too crowded
