@@ -136,15 +136,27 @@ class user {
     }      
     
     function login() {
+        // we require $ip_inf object here to build the user object upon a successful login
         // we will try and login to the database with the selected information
-        $sql = sprintf("SELECT COUNT(*) FROM `users` WHERE `user_name` = '%s' AND `password` = '%s'", $this->user_name, hashNsalt($this->password));
+        //$sql = sprintf("SELECT COUNT(*) FROM `users` WHERE `user_name` = '%s' AND `password` = '%s'", $this->user_name, hashNsalt($this->password));
+        $sql = sprintf("SELECT * FROM `users` WHERE `user_name` = '%s' AND `password` = '%s'", $this->user_name, hashNSalt($this->password));
         $con = getSQLConnection('deal_site');
-        $res = mysql_result(mysql_query($sql, $con), 0);
+        //$res = mysql_result(mysql_query($sql, $con), 0);
+        $res = mysql_query($sql, $con);
+        if (mysql_num_rows($res) == 0) {
+            return 0;   
+        }
+        while ($row = mysql_fetch_array($res)) {
+            // populate our user object
+            $user -> full_name = $row['full_name'];
+            $user -> last_login = $row['last_login'];
+            $user -> creation_date = $row['creation_date'];
+            //$user -> ip_address = $ip_inf; // store the onbject    
+        }
+        return 1;
         // close our mysql connection
         mysql_close($con);
-        // return the count to the calling script
-        return $res;
-   }
+    }
 }
 
 class company {

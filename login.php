@@ -31,6 +31,9 @@ if (isset($login_attempt)) {
         echo "<span style='color:red;'>invalid user name or password</span>";
     }
     if ($login_attempt == 1) {
+        // redirect the user to their home page and begin their sesssion
+        session_start();
+        $_SESSION['user'] = $user;
         echo sprintf("<h1>logged in as %s</h1>", $user->user_name);
         echo "please wait while you are redirected to your home page..";
         die();
