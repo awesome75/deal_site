@@ -62,7 +62,6 @@ foreach ($tag_strings as $tag_string) {
     // $tags_id_string is what we will actually put into the DB
     // we just instantiate the object for the purpose of using it's methods
 }
-echo $tags_id_string;
 // tags should be taken care of and fully accessable via the $tags object array
 // we need to get the location information now
 if ($_POST['address']) {
@@ -81,6 +80,7 @@ $deal -> deal_title = SQLClean($_POST['deal_title']);
 $deal -> deal_poster_id = $user -> user_id;
 $deal -> company_id = $company -> id;
 $deal -> deal_price = SQLClean($_POST['price']);
+$deal -> deal_start_date = SQLClean($_POST['start_date']);
 $deal -> deal_end_date = SQLCLean($_POST['end_date']);
 $deal -> deal_text = SQLClean($_POST['deal_text']);
 $deal -> deal_latitude = $lat;
@@ -95,7 +95,6 @@ $deal -> algo_ranking = 0;
 $deal -> thanks_count = 0;
 $deal -> active = 1;
 // now we have the deal object, pass it to the insert function
-//var_dump($deal);
 $result = addDeal($deal); // takes a deal object 
 echo $result;
 ///return $result; // return the result of the operation to the script that requested it

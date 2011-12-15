@@ -28,15 +28,15 @@ function getXmlHttp() {
     return req;
 }
 
-function clearInput(name) {
+function clearInput(input) {
 	// clear a specified input box of it's defualt value when a user clicks the field
-    try {
-        var input;
-	    input = document.getElementsByName(name)[0];
-	    input.value = ''; // blank out the input value
+    if (input.value.indexOf('..') != -1) {
+        // so the script only clears the inputs if they are the default IE hav the whaterver.. format
+        // this is a hack job I know but we will improve the JS later
+        input.value = ''; 
     }
-    catch(e) {
-        name.value = '';  
+    else {
+        return 0;
     }
 }
 
@@ -75,7 +75,7 @@ function submitDeal() {
         }
     };
     url = "php/add_deal.php";
-    params = "deal_title="+title+"&company="+company+"+&price="+price+"&end_date="+end_date+"&deal_text="+deal_text+"&address="+address+"&tags="+tags;
+    params = "deal_title="+title+"&company="+company+"+&price="+price+"&start_date="+start_date+"&end_date="+end_date+"&deal_text="+deal_text+"&address="+address+"&tags="+tags;
     req.open('POST', url, true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.send(params);
@@ -87,7 +87,14 @@ function alertValidateFail(input) {
     input.setAttribute('style', 'border: 1px solid red;');
     input.onfocus = function() {
         input.setAttribute('style', 'border: 1px solid #284F31;');   
+        input.setAttribute('error', '0');
     };
+    if (input.name == 'deal_text') {
+        // we will want to set the inner html to be reflective of error as well
+        input.innerHTML = "Please enter a simple description of this offer";
+    }
+    // finally we will set the error property to true so the form can't be submitted as is
+    input.setAttribute('error', '1');
 }
 
 function parseResponse(type, resp) {
@@ -178,6 +185,7 @@ function addDealInput(name, type, val) {
     // end of onkeyup functions
     // now we go to onblur error checking functions
     input.onblur = function() {
+        //console.log('onblur hit for: ' + input.name);
         switch(input.name){
             // handle the onblur functions for the fields based on name   
             case 'price':
@@ -186,7 +194,7 @@ function addDealInput(name, type, val) {
                     regex = /([\d]+)\.([\d]{2})/;
                     m = regex.exec(input.value);
                     // m will be an array like (2.25),(2),(25)
-                    price = m[0];
+                    price_value = m[0];
                 }
                 catch(e) {
                     // probably the user provided a whole number
@@ -194,8 +202,8 @@ function addDealInput(name, type, val) {
                     m = regex.exec(input.value);
                     // m will be an array like (2),(2)
                     if (m) {
-                        price = m[0];
-                        input.value = price + ".00";
+                        price_value = m[0];
+                        input.value = price_value + ".00";
                     }
                     else {
                         // this means the price did not pass validation, let the user know
@@ -228,7 +236,46 @@ function addDealInput(name, type, val) {
                     
                 // end of start_date onblur functions
                 break;
-                
+            
+            // end_date onblur stuff 
+            case 'end_date':
+                // we will make an array with words that will trigger replacement to 'indefinite'
+                // should be much cleaner than the above method used for start_date
+                replace = ['never','indefinite','none','n/a','end date..'];
+                for (var i = 0; i < replace.length; i++) {
+                    if (input.value.toLowerCase().indexOf(replace[i]) != -1) {
+                        // replace the users input with 'indefinite'
+                        input.value = 'indefinite';
+                        // we will terminate the case here since we obviously won't need to validate this as a date
+                        break;
+                    }
+                    else if (input.value.trim() == '') {
+                        input.value = 'indefinite';
+                        break;
+                    }
+                }
+                // if we are still running after the loop then we will(attempt to) validate this
+                validateDate(input.value);
+                // end of end_date onblur functions
+                break;
+            
+            // deal about onbur stuff
+            case 'deal_text':
+                // same as above just check out the user input
+                replace = ['about deal..'];
+                for (var i = 0; i < replace.length; i++) {
+                    if (input.value.toLowerCase().indexOf(replace[i]) != -1) {
+                        // this box we don't really replace, we demand a deal about XD
+                        alertValidateFail(input);
+                        break;
+                    }
+                    else if (input.value.trim() == '') {
+                        // same thing, not acceptable input
+                        alertValidateFail(input);
+                    }
+                }
+    
+            
             
         }
     };

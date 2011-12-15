@@ -327,7 +327,7 @@ class tag {
         // we will be adding this tag to the database for future use
         $sql = sprintf("INSERT INTO `deal_tags` VALUES('','%s')", $this -> text);
         $con = getSQLConnection('deal_site');
-        $res = mysql_query($sql, $con);
+        //$res = mysql_query($sql, $con);
         if ($res) {
             // now that we have the object in the DB call getID() to update object
             $this -> getID();
