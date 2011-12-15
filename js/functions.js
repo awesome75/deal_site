@@ -163,7 +163,7 @@ function addDealInput(name, type, val) {
     else {
         input.value = val;
     }
-    input.setAttribute('onClick', 'clearInput(this)');
+    input.setAttribute('onFocus', 'clearInput(this)');
     input.onkeyup = 
     function() {
         // this is where we will run error checking and other functions on the fields
@@ -260,7 +260,7 @@ function addDealInput(name, type, val) {
             case 'end_date':
                 // we will make an array with words that will trigger replacement to 'indefinite'
                 // should be much cleaner than the above method used for start_date
-                replace = ['never','indefinite','none','n/a','end date..'];
+                replace = ['never','indefinite','none','n/a','end date..','always'];
                 for (var i = 0; i < replace.length; i++) {
                     if (input.value.toLowerCase().indexOf(replace[i]) != -1) {
                         // replace the users input with 'indefinite'
@@ -273,6 +273,11 @@ function addDealInput(name, type, val) {
                         break;
                     }
                     else {
+                        if (input.value == 'indefinite') {
+                            break;
+                            // not sure why we need this, the flow should prevent validation of this
+                            // field for invalid but whatever
+                        }
                         validateDate(input);   
                     }
                 }

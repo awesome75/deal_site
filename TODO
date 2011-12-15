@@ -6,6 +6,8 @@ Validate all HTML and CSS
 
 Add more semantic markup with HTML5
 
+functions.js should be reorganized and made more readable soon, the whole thing is kind of a hack job
+
 Finish deal retrieval system (location search not working yet) - in progress
 Look into new method for deal retrieve combinations - maybe a switch and not tons else if statements
 
