@@ -11,7 +11,7 @@ functions.js should be reorganized and made more readable soon, the whole thing 
 Finish deal retrieval system (location search not working yet) - in progress
 Look into new method for deal retrieve combinations - maybe a switch and not tons else if statements
 
-Finish add deal code, the code is mostly debugged and has been rewritten. (we are still lacking the add deal view)
+add deal view needs to gain tag suggest and more advanced company suggest
 
 Create mobile site (we will forget about native mobile apps for now)
 
