@@ -6,6 +6,7 @@ $ipinf = getClientLocData();
 // end of IP location stuff
 // session stuff
 session_start();
+print_r($_SESSION);
 if ($_SESSION != null) {
     // the user muust have already logged in
     header('Location: /deal_site/');
