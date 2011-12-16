@@ -45,7 +45,7 @@ html, body {
     background: #DFEEE0;
     display: inline-block;
     float: left;
-    border-radius: 15px;
+    border-radius: 5px;
     padding: 5px 0 25px 10px;
     font-weight: bold;
     -webkit-box-shadow: 0 0 5px 3px #888;
@@ -307,7 +307,22 @@ h1,h2,h3 {
     z-index: 10;
 }
 
-
-
+.exit_button {
+    background: black;
+    display: inline-block;
+    color: white;
+    font-size: 12px;
+    font-weight: 900;
+    float: right;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 20px;
+    border: 0;
+    position: relative;
+    top: -28px;
+    left: 28px;
+    cursor: pointer;
+}
 
 

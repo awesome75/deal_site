@@ -336,6 +336,11 @@ function displayAddDeal() {
     // create the markup
     div = document.createElement('div');
     div.id = "add_deal_box";
+    // create the little exit button
+    exit = document.createElement('span');
+    exit.setAttribute('class','exit_button');
+    exit.innerHTML = "X";
+    exit.onclick = function(){document.body.removeChild(dim);document.body.removeChild(div);};
     // we need to build the inputs
     title = addDealInput('title', 'text', 'Deal Title..');
     company = addDealInput('company', 'text', 'Company..');
@@ -359,6 +364,7 @@ function displayAddDeal() {
     submit.setAttribute('style', 'width:75px;padding:0;height:30px;margin-bottom:0;');
     submit.setAttribute('onClick', "submitDeal()");
     // let's try adding these to the div
+    div.appendChild(exit);
     div.appendChild(title);
     div.appendChild(company);
     div.appendChild(price);
