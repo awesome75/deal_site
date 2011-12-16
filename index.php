@@ -3,6 +3,15 @@ require_once('php/classes.php'); // make sure we have our functions and classes
 // begin ip geo tracking
 $ipinf = getClientLocData();
 // end of location stuff
+session_start();
+// if the user is not logged in they aren't allowed here
+if ($_SESSION != null) {
+    $user = $_SESSION['user'];
+}
+else {
+    // the user is not logged in and must be sent to the login page
+    header('Location: login.php');
+}
 // check if a tag is set
 if ($_GET['tag']) {
     $tag = new tag();

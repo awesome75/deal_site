@@ -4,13 +4,20 @@ require_once('php/classes.php'); // we will need our classes and functions
 // begin IP geo tracking 
 $ipinf = getClientLocData();
 // end of IP location stuff
+// session stuff
+session_start();
+if ($_SESSION != null) {
+    // the user muust have already logged in
+    header('Location: /deal_site/');
+}
+// end session stuff
 if ($_POST['user'] && $_POST['password']) {
     // this means they have already sent credentials, so we will just check them
     $user = new user();
     $user -> user_name = strtolower(SQLClean($_POST['user']));
     $user -> password = SQLClean($_POST['password']);
     // now we can attempt to login and see what happens
-    $login_attempt = $user -> login();
+    $login_attempt = $user -> login($ipinf);
     // we should probably handle the return from the function
 }
 // if we aren't worried about attempting a login, display the login view
@@ -36,6 +43,7 @@ if (isset($login_attempt)) {
         $_SESSION['user'] = $user;
         echo sprintf("<h1>logged in as %s</h1>", $user->user_name);
         echo "please wait while you are redirected to your home page..";
+        echo "<script>t = setTimeout('document.location=\'/deal_site/\'', 3000);</script>";
         die();
     }
 }

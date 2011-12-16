@@ -135,7 +135,7 @@ class user {
         return $res;
     }      
     
-    function login() {
+    function login($ip_inf) {
         // we require $ip_inf object here to build the user object upon a successful login
         // we will try and login to the database with the selected information
         //$sql = sprintf("SELECT COUNT(*) FROM `users` WHERE `user_name` = '%s' AND `password` = '%s'", $this->user_name, hashNsalt($this->password));
@@ -148,10 +148,16 @@ class user {
         }
         while ($row = mysql_fetch_array($res)) {
             // populate our user object
-            $user -> full_name = $row['full_name'];
-            $user -> last_login = $row['last_login'];
-            $user -> creation_date = $row['creation_date'];
-            //$user -> ip_address = $ip_inf; // store the onbject    
+            $this -> user_id = $row['user_id'];
+            $this -> full_name = $row['full_name'];
+            unset($this->password); // we don't need to keep this around
+            $this -> last_login = $row['last_login'];
+            $this -> creation_date = $row['creation_date'];
+            $this -> ip_address = $ip_inf; // store the object, has much more functionality than IP string :)
+            $this -> location = $row['location'];
+            $this -> email_address = $row['email_address'];
+            $this -> cell_carrier = $row['cell_carrier'];
+            $this -> cell_number = $row['cell_number'];
         }
         return 1;
         // close our mysql connection

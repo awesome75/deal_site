@@ -308,7 +308,7 @@ h1,h2,h3 {
 }
 
 .exit_button {
-    background: black;
+    background: #333;
     display: inline-block;
     color: white;
     font-size: 12px;
