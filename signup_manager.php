@@ -1,5 +1,6 @@
 <?
 // signup page for the deals site
+require_once('php/classes.php'); // get our classes and functions
 // make sure the user is allowed to issue codes
 $allowed = ('tzdev');
 session_start();
@@ -15,7 +16,6 @@ if (!isset($approved)) {
     // user may not get codes
     $approved = 0;
 }
-require_once('php/classes.php'); // get our classes and functions
 if ($_GET['getcode'] == 1 && $approved == 1) {
      // get a fresh sign up code from the server
     $con = getSQLConnection('deal_site');
