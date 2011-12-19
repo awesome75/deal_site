@@ -1,7 +1,9 @@
 <div id="login_box">
     <form method="POST" action="<? echo $_SERVER['PHP_SELF']; ?>" name="login">
-        <input type="text" name="user" value="User Name.." onFocus="clearInput(this)" /><br />
-        <input type="password" name="password" value="Password.." onFocus="clearInput(this)" /><br />
+        <input type="text" name="user" value="User Name.." onFocus="clearInput(this)" /
+        ><br />
+        <input type="text" name="password" value="Password.." onFocus="clearInput(this);this.type='password';" />
+        <br />
         <input type="submit" value="Login" style="width:75px;padding:0;margin:0" />
     </form>
 </div>

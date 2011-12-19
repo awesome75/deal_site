@@ -150,6 +150,7 @@ class user {
             // populate our user object
             $this -> user_id = $row['user_id'];
             $this -> full_name = $row['full_name'];
+            $this -> user_name = $row['user_name']; // reset because login strtolower()'s it
             unset($this->password); // we don't need to keep this around
             $this -> last_login = $row['last_login'];
             $this -> creation_date = $row['creation_date'];

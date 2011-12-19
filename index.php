@@ -20,14 +20,13 @@ if ($_GET['tag']) {
 }
 // include html elements
 $ptitle = "Home";
-// include('php/get_deals.php'); getDeals() will handle this part
-include('html/header.html');
-// right sidebar will be for our promoted deals, not implemented yet
-/*
-include('html/sidebar_right.html');
-echo "hello world";
-closeSidebar();
-*/
+if (isset($user)) {
+    include('html/header_loggedin.html');   
+}
+else {
+    include('html/header.html');
+}
+// include the left sidebar of deal filters
 include('html/sidebar_left.html'); // already closed in the code
 ?>
 <!-- override width until right_sidebar is implemented -->
@@ -38,6 +37,7 @@ include('html/sidebar_left.html'); // already closed in the code
 </style>
 <?
 include('html/deals_container.html');
+// individual deal view should not have add deal button
 if (!$_GET['deal_id']){
     include('html/add_deal_button.html');
 }

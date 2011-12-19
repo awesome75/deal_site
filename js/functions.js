@@ -164,6 +164,13 @@ function addDealInput(name, type, val) {
         input.value = val;
     }
     input.setAttribute('onFocus', 'clearInput(this)');
+    // style overrides
+    switch (input.name) {
+        case 'title':
+            input.setAttribute('style', 'margin-top: -20px;');
+            break;
+    }
+    // go to the various blur, focus, keyup etc functions
     input.onkeyup = 
     function() {
         // this is where we will run error checking and other functions on the fields
@@ -202,10 +209,19 @@ function addDealInput(name, type, val) {
         }
     };
     // end of onkeyup functions
+    // we will set onclicks
+    input.onclick = function() {
+        switch(input.name) {
+            case 'password':
+                input.type = "password";
+                break;
+        }
+        // end of onclick functions switch
+    };
     // now we go to onblur error checking functions
     input.onblur = function() {
         //console.log('onblur hit for: ' + input.name);
-        switch(input.name){
+        switch(input.name) {
             // handle the onblur functions for the fields based on name   
             case 'price':
                 // we will see if they entered a valid price
@@ -361,7 +377,8 @@ function displayAddDeal() {
     submit = document.createElement('input');
     submit.type = 'button';
     submit.value = "add deal";
-    submit.setAttribute('style', 'width:75px;padding:0;height:30px;margin-bottom:0;');
+    submit.name = "submit";
+    submit.setAttribute('style', 'width:15%;padding:0;height:30px;margin-bottom:0;margin-left: 42.5%;');
     submit.setAttribute('onClick', "submitDeal()");
     // let's try adding these to the div
     div.appendChild(exit);
