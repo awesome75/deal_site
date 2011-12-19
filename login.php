@@ -43,7 +43,7 @@ if (isset($login_attempt)) {
         $_SESSION['user'] = $user;
         echo sprintf("<h1>logged in as %s</h1>", $user->user_name);
         echo "please wait while you are redirected to your home page..";
-        echo "<script>t = setTimeout('document.location=\'/deal_site/\'', 3000);</script>";
+        echo "<script>t = setTimeout('document.location=\'/deal_site/\'', 2000);</script>";
         die();
     }
 }

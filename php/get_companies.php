@@ -27,8 +27,10 @@ while ($row = mysql_fetch_array($res)) {
 }
 if ($_GET['q']) {
     // this means a JS script is expecting us to return a company object for it to create
-    $ret = "%s,%s,%s,%s,%s,%s,%s";
-    echo sprintf($ret,$company->id,$company->name,$company->rating,$company->about,$company->address,$company->thumbs_up,$company->thumbs_down);
+    foreach ($companies as $company) {
+        $ret = "%s,%s,%s,%s,%s,%s,%s;";
+        echo sprintf($ret,$company->id,$company->name,$company->rating,$company->about,$company->address,$company->thumbs_up,$company->thumbs_down);
+    }
 }
 // close our MySQL connection
 mysql_close($con);

@@ -71,6 +71,59 @@ function validateDate(input) {
     req.send(null);
 }
 
+function getSuggest(type, input) {
+    if (input.value.length < 3) {
+         // too early for auto suggest yet
+        return;
+    }
+    var req;
+    var suggestion = [];
+    req = getXmlHttp();
+    req.onreadystatechange = function() {
+        if (req.readyState == 4) {
+            if (req.status == 200) {
+                suggestion = parseResponse(type, req.responseText.trim());
+                if (suggestion.length != 0) {
+                    // we need to make a little div they can key through and select values
+                    try {
+                        div = document.getElementById('suggest_div');   
+                        div.innerHTML = "";
+                    }
+                    catch(e) {
+                        var div = document.createElement('div');
+                        div.id = "suggest_div";
+                    }
+                    // build the html
+                    var i;
+                   // console.log(suggestion);
+                    for (i = 0; i < suggestion.length; i++) {
+                        span = document.createElement('span');
+                        span.innerHTML = suggestion[i];
+                        span.onclick = function() {
+                            input.value = this.innerHTML;
+                            this.parentNode.parentNode.removeChild(this.parentNode);
+                        }
+                        div.appendChild(span);
+                    }
+                    input.parentElement.appendChild(div);
+                }
+            }
+        }
+    };
+    switch(type) {
+        case 'company_name':
+            url = "php/get_companies.php?q=" + input.value;
+            break;
+            
+        case 'type_filter':
+            // this is really just get by tag
+            url = "php/get_tags.php?q=" + input.value;
+            break;    
+    }
+    req.open('GET', url, true);
+    req.send(null);   
+}
+
 // seperate these into seperate modules, functions.js is getting too crowded
 
 function submitDeal() {
@@ -122,19 +175,24 @@ function parseResponse(type, resp) {
     var suggestion;
     switch(type) {
         // suggest a company name to the script
-        case 'company_name':
+        default:
+            names = new Array();
             try {
-                resp_parts = resp.split(',');
-                // all we really care about it name so set it and return
-                suggestion = resp_parts[1];
+                companies = resp.split(';');
+                for (var i = 0; i < companies.length; i++) {
+                    company_parts = companies[i].split(',');
+                    if (company_parts[1] != undefined) {
+                        names.push(company_parts[1]);
+                    }
+                }
+                suggestion = names;
             }
             catch(e) {
                 suggestion = 0;   
             }
-            break;
-        
+            break;   
     }
-    // return out suggestion
+    // return our suggestion
     return suggestion;
 }
 
@@ -178,25 +236,7 @@ function addDealInput(name, type, val) {
         switch (input.name) {
             // we handle error checking different by field obviously
             case 'company':
-                // company needs to have auto suggest of other companies in DB
-                if (input.value.length < 3) {
-                    // too early for auto suggest yet
-                    return;
-                }
-                req = getXmlHttp();
-                req.onreadystatechange = function() {
-                    if (req.readyState == 4) {
-                        if (req.status == 200) {
-                            var suggestion;
-                            suggestion = parseResponse('company_name', req.responseText.trim());
-                            if (suggestion != 0) {
-                                input.value = suggestion;   
-                            }
-                        }
-                    }
-                };
-                req.open('GET', 'php/get_companies.php?q=' + input.value, true);
-                req.send(null);
+                getSuggest('company_name', input);
                 break;
             
             // this will handle onkeyup for price
