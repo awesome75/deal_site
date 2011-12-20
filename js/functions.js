@@ -114,16 +114,46 @@ function getSuggest(type, input) {
         case 'company_name':
             url = "php/get_companies.php?q=" + input.value;
             break;
-            
+        // on to the tag filtering case 
         case 'type_filter':
             // this is really just get by tag
             url = "php/get_tags.php?q=" + input.value;
-            break;    
+            break; 
     }
     req.open('GET', url, true);
     req.send(null);   
 }
 
+function dealSuggest() {
+    // AJAX deal suggest
+    // first we need to determine the type of deals we are going to bring back
+    var company, location, price, type;
+    try {
+        company = document.getElementsByName('company')[0].valie;
+    }
+    catch(e) {
+        company = undefined;   
+    }
+    try {
+        location = document.getElementsByName('location')[0].value;   
+    }
+    catch(e) {
+        location = undefined;   
+    }
+    try {
+        price = document.getElementsByName('price')[0].value;   
+    }
+    catch(e) {
+        price = undefined;
+    }
+    try {
+        type = document.getElementsByName('company')[0].value;
+    }
+    catch(e) {
+        type = undefined;   
+    }
+    // now we go through each one and see what ones were defined
+}
 // seperate these into seperate modules, functions.js is getting too crowded
 
 function submitDeal() {
@@ -171,12 +201,13 @@ function alertValidateFail(input) {
 
 function parseResponse(type, resp) {
     // parse the response from a PHP autosuggest script
-    var resp_parts = new Array();
+    //var resp_parts = new Array();
     var suggestion;
+    var companies = [];
     switch(type) {
         // suggest a company name to the script
-        default:
-            names = new Array();
+        case 'company_name':
+            var names = [];
             try {
                 companies = resp.split(';');
                 for (var i = 0; i < companies.length; i++) {
@@ -191,6 +222,24 @@ function parseResponse(type, resp) {
                 suggestion = 0;   
             }
             break;   
+        // next type suggest case
+        case 'type_filter':
+            var tags = [];
+            var tag_names = [];
+            try {
+                tags = resp.split(';');
+                for (i = 0; i < tags.length; i++) {
+                    if (tags[i] != "" && tags[i] != undefined) {
+                        tag_names.push(tags[i].split(',')[1]);
+                    }
+                }
+                suggestion = tag_names;
+            }
+            catch(e) {
+                console.log(e);
+                suggestion = 0;
+            }
+            break;
     }
     // return our suggestion
     return suggestion;
