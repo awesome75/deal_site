@@ -44,6 +44,8 @@ if (isset($login_attempt)) {
         echo sprintf("<h1>logged in as %s</h1>", $user->user_name);
         echo "please wait while you are redirected to your home page..";
         echo "<script>t = setTimeout('document.location=\'/deal_site/\'', 2000);</script>";
+        echo "\n<br />\n<br />\n";
+        echo sprintf("If you are not redirected in two seconds please <a href='%s'>click here</a>", '/deal_site/');
         die();
     }
 }

@@ -11,10 +11,18 @@ switch ($_GET['do']) {
             echo "invalid date";   
         }
         break;
-    
-    
-    
-
+        
+    case 'markcodeissued':
+        $sql = sprintf("UPDATE `signup_codes` SET `issued` = 1 WHERE `code` = '%s'", SQLClean($_GET['code']));
+        $con = getSQLConnection('deal_site');
+        $res = mysql_query($sql, $con);
+        if ($res) {
+            echo 0; // we're good   
+        }
+        else {
+            echo 1;   
+        }
+        break;
 }
 // end of get handling
 ?>

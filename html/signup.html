@@ -2,13 +2,17 @@
 <div id="signup_box">
     <form name="signup" action="<? echo $_SERVER['PHP_SELF']; ?>" method="POST" />
         <input type="text" name="full_name" value="Full Name.." onFocus="clearInput(this);" />
-        <input type="email" name="email" value="Email.." onFocus="clearInput(this);" />
+        <input type="email" name="email" value="Email.." onFocus="clearInput(this);" onBlur="formCheck.verifyEmail(this);" />
         <input type="text" name="user_name" value="User Name.." onFocus="clearInput(this);" />
         <input type="text" name="password" value="Password.." onFocus="clearInput(this);this.type='password';" />
-        <input type="text" name="signup_code" value="Signup Code.." onFocus="clearInput(this);" />
+        <input type="text" name="signup_code" value="Signup Code.." onFocus="clearInput(this);" onBlur="formCheck.verifyAlphaNum(this);" />
         <input type="submit" value="Sign Up" id="submit_button" style="width: 75px;" />
     </form>
 </div>
+<script type="text/javascript" language="javascript" src="/deal_site/js/form_validator.js"></script>
+<script>
+formCheck = new verifyForm('signup', '');
+</script>
 <!-- end of the input box -->
 <div id="signup_splash">
     <h1 style="margin-bottom: 15px;">welcome to the beta :)</h1>

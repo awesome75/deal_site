@@ -47,8 +47,15 @@ TODO:
 */
 
 function verifyForm(form_name, data_types) {
-	// form verification is derived from the Simple Form Validation Framework By Chase Higgins
-	parent_form = document.getElementsByName(form_name)[0];
+    try {
+	    parent_form = document.getElementsByName(form_name)[0];
+        console.log('parent form found: ' + parent_form);
+    }
+    catch(e) {
+        console.log("couldn't get form: " + e);
+        console.log('exiting...');
+        return 0;
+    }
 	// now we have our parent form, let us get a count of the input fields
 	inputs = parent_form.getElementsByTagName('input');
 	text_fields = new Array();
@@ -66,12 +73,12 @@ function verifyForm(form_name, data_types) {
 	// we should have a good list of fields now, make sure they match the types count
 	if (text_fields.length != data_types.length) {
 		// this would typically mean the data types array passed here was misaligned
-		alert('Potentially misaligned types array passed, can not parse and verify fields');
-		return 0;
+        // if they are using script as a library this is not an issue, so just log the error
+        console.log('Potentially misaligned types array passed, will not be able to auto verify form..');
 	}
 	// if that checks out we should be good to go
 	// define how to parse various fields
-	var regexParse = function(regex, field) {
+	this.regexParse = function(regex, field) {
 		m = regex.exec(field);
 		if (m != null) {
 			return true;
@@ -80,18 +87,34 @@ function verifyForm(form_name, data_types) {
 			return false;
 		}
 	}
+    
+    this.alertValidateFail = function(input) {
+        // we need to alert of failed validation to the user
+        input.setAttribute('style', 'border: 1px solid red;');
+        input.onfocus = function() {
+            input.setAttribute('style', 'border: 0;');   
+            input.setAttribute('error', '0');
+        };
+        // finally we will set the error property to true so the form can't be submitted as is
+        input.setAttribute('error', '1');
+    }
+
 	// regexParse will work as a base for creating other parsing methods
 	this.verifyAlpha = function(field) {
 		regex = /[A-Za-z]+/;
-		return regexParse(regex, field);
+		return this.regexParse(regex, field);
 	}
 	this.verifyAlphaNum = function(field) {
 		regex = /[\w]+/;
-		return regexParse(regex, field);
+        result = this.regexParse(regex, field);
+        if (result == false) {
+            this.alertValidateFail(field);   
+        }
+		return result;
 	}
 	this.verifyNum = function(field) {
 		regex = /[\d]+/;
-		return regexParse(regex, field);
+		return this.regexParse(regex, field);
 	}
 	// those are our generic parsing methods, now let us define special ones for phone numbers etc
 	this.verifyPhone = function(field) {
@@ -100,11 +123,15 @@ function verifyForm(form_name, data_types) {
 			return false;
 		}
 		regex = /1?\(?([\d]{3})\)?.?([\d]{3}).?([\d]{4})/; // ha phone numbers..
-		return regexParse(regex, field);
+		return this.regexParse(regex, field);
 	}
 	this.verifyEmail = function(field) {
 		regex = /([\w.-]+)@([\w.-]+)\.([\w]{2,3})/;
-		return regexParse(regex, field);	
+		result = this.regexParse(regex, field.value);
+        if (result == false) {
+            this.alertValidateFail(field);
+        }
+        return result;
 	}
 	// I believe that should cover the needed parsing methods for the data types our form verification lib supports
 	// now we need to make a method that will put it all together
