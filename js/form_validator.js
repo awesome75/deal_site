@@ -133,6 +133,26 @@ function verifyForm(form_name, data_types) {
         }
         return result;
 	}
+    // full name parser will check if the input looks like a name
+    this.verifyFullName = function(field) {
+        regex = /^[a-zA-Z'\s]+$/;
+        result = this.regexParse(regex, field.value);
+        if (result == false) {
+            this.alertValidateFail(field);   
+        }
+        return result;
+    };
+    // verify user names for the script
+    this.verifyUserName = function(field) {
+        // we will allow usernames with letters, numbers, and underscores, you can always adjust this for your needs
+        regex = /^[A-Za-z0-9_]{3,15}$/;
+        result = this.regexParse(regex, field.value);
+        console.log(result);
+        if (result == false) {
+            this.alertValidateFail(field);   
+        }
+        return result;
+    };
 	// I believe that should cover the needed parsing methods for the data types our form verification lib supports
 	// now we need to make a method that will put it all together
 	this.autoVerify = function() {
