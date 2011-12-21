@@ -124,36 +124,6 @@ function getSuggest(type, input) {
     req.send(null);   
 }
 
-function dealSuggest() {
-    // AJAX deal suggest
-    // first we need to determine the type of deals we are going to bring back
-    var company, location, price, type;
-    try {
-        company = document.getElementsByName('company')[0].valie;
-    }
-    catch(e) {
-        company = undefined;   
-    }
-    try {
-        location = document.getElementsByName('location')[0].value;   
-    }
-    catch(e) {
-        location = undefined;   
-    }
-    try {
-        price = document.getElementsByName('price')[0].value;   
-    }
-    catch(e) {
-        price = undefined;
-    }
-    try {
-        type = document.getElementsByName('company')[0].value;
-    }
-    catch(e) {
-        type = undefined;   
-    }
-    // now we go through each one and see what ones were defined
-}
 // seperate these into seperate modules, functions.js is getting too crowded
 
 function submitDeal() {
@@ -467,7 +437,7 @@ function displayAddDeal() {
     submit.type = 'button';
     submit.value = "add deal";
     submit.name = "submit";
-    submit.setAttribute('style', 'width:15%;padding:0;height:30px;margin-bottom:0;margin-left: 42.5%;');
+    submit.setAttribute('style', 'width:15%;min-width:75px;padding:0;height:30px;margin-bottom:0;margin-left:42.5%;');
     submit.setAttribute('onClick', "submitDeal()");
     // let's try adding these to the div
     div.appendChild(exit);
