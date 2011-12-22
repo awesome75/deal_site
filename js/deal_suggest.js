@@ -9,7 +9,7 @@ function dealSuggest() {
             // iterate the deal objects and build some deals
             // model the way it is built of deal.html
             var deals = [];
-            var container, title, title_link, info_container, byline, info_table, tr, price, end_info, text, footer, tags;
+            var container, title, title_link, info_container, byline, info_table, tr, price, end_info, text;
             // first the container
             container = document.createElement('div');
             container.setAttribute('class', 'deal');
@@ -93,25 +93,31 @@ function dealSuggest() {
     location = document.getElementsByName('location')[0].value.trim();   
     price = document.getElementsByName('price_filter')[0].value.trim();   
     type = document.getElementsByName('type')[0].value.trim();
+    var url = "php/deal_suggest.php";
     // now we go through each one and see what ones were defined
     if (company != "" && location == "" && price == "" && type == "") {
         // we will do a company suggest for the deals  
-        req.onreadystatechange = function() {
-            if (req.readyState == 4 && req.status == 200) {
-                // we're good to parse results   
-                resp = req.responseText.trim();
-                console.log(resp);
-                deal_objects = JSON.parse(resp);
-                deals = createDealHtml(deal_objects);
-                footers = createDealFooters(deal_objects);
-                displayDeals(deals, footers);
-                // deals now contains a bunch of HTML objects for the page
-            }
-        };
-        req.open('GET', 'php/deal_suggest.php?company='+company+'&location=&price=&type=', true);
-        req.send(null);
+        url += "?company=" + company + "&location=&price=&type=";
     }
-
+    else if (company == "" && location == "" && price == "" && type != "") {
+        // just get deals by tag with AJAX
+        url += "?company=&location=&price=&type=" + type;
+    }
+    // create the listener for the request
+    req.onreadystatechange = function() {
+        if (req.readyState == 4 && req.status == 200) {
+            // we're good to parse results   
+            resp = req.responseText.trim();
+            console.log(resp);
+            deal_objects = JSON.parse(resp);
+            deals = createDealHtml(deal_objects);
+            footers = createDealFooters(deal_objects);
+            displayDeals(deals, footers);
+            // deals now contains a bunch of HTML objects for the page
+        }
+    };
+    req.open('GET', url, true);
+    req.send(null);
 }// end of dealSuggest()
 
 

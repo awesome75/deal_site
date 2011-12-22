@@ -9,11 +9,12 @@ class deal_suggest {
     var $deals;
     
     function getSuggestion() {
-        if (!is_int($this->company)) {
-            $this->location = SQLClean($_GET['location']);   
-            $this->company = SQLClean($_GET['company']);
-            $this->price = SQLClean($_GET['price']);
-            $this->type = SQLCLean($_GET['type']);
+        $this->location = SQLClean($_GET['location']);   
+        $this->company = SQLClean($_GET['company']);
+        $this->price = SQLClean($_GET['price']);
+        $this->type = SQLCLean($_GET['type']);
+        // if there is a company wee want the ID
+        if ($this->company != null && !is_int($this->company)) {
             // we need to retrieve the company ID
             $sql = sprintf("SELECT `company_id` FROM `companies` WHERE `company_name` = '%s'", trim($this->company));
             $con = getSQLConnection('deal_site');
@@ -31,10 +32,22 @@ class deal_suggest {
         if ($this->company != "" && $this->price == "" && $this->type == "") {
             // we are going company only
             $this->deals = getDeals(null, null, null, $this->company);
-            if (is_array($this->deals)) {
-                // this means we made great success
-                return 1;
-            }
+        }
+        else if ($this->company == "" && $this->price == "" && $this->type != "") {
+            $this->deals = getDeals(null, $this->type, null, null);
+        }
+        
+        else {
+            // we had problem determining the query type
+            return 0;
+        }
+        // now let's see if our result means anything
+        if (is_array($this->deals)) {
+            // this means we made great success
+            return 1;
+        }
+        else {
+            return 0;   
         }
     } // end of getSuggest() method
     
