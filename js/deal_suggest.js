@@ -33,8 +33,8 @@ function dealSuggest() {
             tr = document.createElement('tr');
             price = document.createElement('td');
             end_info = document.createElement('td');
-            price.innerHTML = "$" + deal_objects[i].deal_price;
-            end_info.innerHTML = "Ends: " + deal_objects[i].deal_end_date;
+            price.innerHTML = "$" + deal_objects[i].deal_price + ",";
+            end_info.innerHTML = "&nbsp;Ends: " + deal_objects[i].deal_end_date;
             tr.appendChild(price);
             tr.appendChild(end_info);
             info_table.appendChild(tr);
@@ -42,7 +42,6 @@ function dealSuggest() {
             // make the deal text container
             text = document.createElement('div');
             text.innerHTML = deal_objects[i].deal_text;
-            console.log(text.innerHTML);
             // append to the container
             container.appendChild(title);
             container.appendChild(info_container);
@@ -67,6 +66,12 @@ function dealSuggest() {
                 a = document.createElement('a');
                 a.href = "/deal_site/?tag=" + tags[ctrl];
                 a.innerHTML = tags[ctrl];
+                if (ctrl == 0) {
+                    footer.innerHTML += ""; 
+                }
+                else {
+                    footer.innerHTML += ", ";
+                }
                 footer.appendChild(a);
                 footers.push(footer);
             }
@@ -77,8 +82,6 @@ function dealSuggest() {
     this.displayDeals = function(deals, footers) {
         var div = document.getElementById('deals_container');
         div.innerHTML = ""; // blank it out
-        console.log(deals);
-        console.log(footers);
         for (var i = 0; i < deals.length; i++) {
             div.appendChild(deals[i]);
             div.appendChild(footers[i]);
@@ -86,37 +89,18 @@ function dealSuggest() {
     };
     
     req = getXmlHttp();
-    try {
-        company = document.getElementsByName('company')[0].value;
-    }
-    catch(e) {
-        company = undefined;   
-    }
-    try {
-        location = document.getElementsByName('location')[0].value;   
-    }
-    catch(e) {
-        location = undefined;   
-    }
-    try {
-        price = document.getElementsByName('price')[0].value;   
-    }
-    catch(e) {
-        price = undefined;
-    }
-    try {
-        type = document.getElementsByName('type')[0].value;
-    }
-    catch(e) {
-        type = undefined;   
-    }
+    company = document.getElementsByName('company')[0].value.trim()
+    location = document.getElementsByName('location')[0].value.trim();   
+    price = document.getElementsByName('price_filter')[0].value.trim();   
+    type = document.getElementsByName('type')[0].value.trim();
     // now we go through each one and see what ones were defined
-    if (company) {
+    if (company != "" && location == "" && price == "" && type == "") {
         // we will do a company suggest for the deals  
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
                 // we're good to parse results   
                 resp = req.responseText.trim();
+                console.log(resp);
                 deal_objects = JSON.parse(resp);
                 deals = createDealHtml(deal_objects);
                 footers = createDealFooters(deal_objects);

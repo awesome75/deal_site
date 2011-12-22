@@ -164,7 +164,27 @@ class user {
         // close our mysql connection
         mysql_close($con);
     }
-}
+    
+    function buildById() {
+        // build user object by id   
+        $sql = sprintf("SELECT * FROM `users` WHERE `user_id` = %s", $this->user_id);
+        $con = getSQLConnection('deal_site');
+        $res = mysql_query($sql, $con);
+        while ($row = mysql_fetch_array($res)) {
+            $this -> full_name = $row['full_name'];
+            $this -> user_name = $row['user_name'];
+            $this -> last_login = $row['last_login'];
+            $this -> creation_date = $row['creation_date'];
+            $this -> ip_address = $_SERVER['REMOTE_ADDR'];
+            $this -> location = $row['location'];
+            $this -> email_address = $row['email_address'];
+            $this -> cell_carrier = $row['cell_carrier'];
+            $this -> cell_number = $row['cell_number'];
+        }
+        mysql_close($sql);
+        return 1;
+    }
+} // end of user class
 
 class company {
     // the company object stores company information for scripts
@@ -357,6 +377,7 @@ class tag {
         }
         mysql_close();
     }
+    
 }
 
 

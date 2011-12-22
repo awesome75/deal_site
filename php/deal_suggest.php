@@ -38,6 +38,39 @@ class deal_suggest {
         }
     } // end of getSuggest() method
     
+    function formatDeals() {
+        // format the date, user, tags etc for the user
+        foreach ($this->deals as $deal) {
+            // iterate deals and reformat the data
+            // first format the user name
+            $user = new user();
+            $user->user_id = $deal->deal_poster_id;
+            $user->buildById();
+            $deal->deal_poster_id = $user->user_name;
+            // now we need to format the dates
+            $deal->deal_post_date = date('F j, Y \a\t g:ia', strtotime($deal->deal_post_date));
+            $deal->deal_end_date = date('F j, Y \a\t g:ia', strtotime($deal->deal_end_date));
+            if (date('Y', strtotime($deal->deal_end_date)) == '1969') {
+                $deal->deal_end_date = "Indefinite";   
+            }
+            // now let's format the tags
+            $tag_array = $deal -> separateTags($deal->tags);
+            $tags = $deal -> getTags($tag_array);
+            $i = 0;
+            $deal->tags = "";
+            foreach ($tags as $tag) {
+                if ($i == 0) {
+                    $deal->tags = $tag->text;   
+                }
+                else {
+                    $deal->tags .= sprintf(",%s", $tag->text);   
+                }
+                $i++;
+            }
+        }
+    
+    }
+    
     function encodeDeals() {        
         return json_encode($this->deals);
     } // end of returnDeals() method
@@ -51,6 +84,8 @@ function main() {
         die('fail');
     }
     // if the script is still running we will need to parse and return data to the calling JS function
+    $suggest->formatDeals();
+    // now encode it to JSON
     $response = $suggest->encodeDeals();
     echo $response; // echo it out to the script
     return 1; // success
