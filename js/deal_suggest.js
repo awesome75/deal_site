@@ -4,11 +4,11 @@ function dealSuggest() {
     var deals, footers = [];
     var company, location, price, type, req, resp, deal_objects;
     this.createDealHtml = function(deal_objects) {
+        var deals = [];
         // make the HTML code for the deals 
         for (var i = 0; i < deal_objects.length; i++) {
             // iterate the deal objects and build some deals
             // model the way it is built of deal.html
-            var deals = [];
             var container, title, title_link, info_container, byline, info_table, tr, price, end_info, text;
             // first the container
             container = document.createElement('div');
@@ -73,8 +73,8 @@ function dealSuggest() {
                     footer.innerHTML += ", ";
                 }
                 footer.appendChild(a);
-                footers.push(footer);
             }
+            footers.push(footer);
         }
         return footers;
     };
@@ -89,7 +89,7 @@ function dealSuggest() {
     };
     
     req = getXmlHttp();
-    company = document.getElementsByName('company')[0].value.trim()
+    company = document.getElementsByName('company')[0].value.trim();
     location = document.getElementsByName('location')[0].value.trim();   
     price = document.getElementsByName('price_filter')[0].value.trim();   
     type = document.getElementsByName('type')[0].value.trim();
@@ -108,7 +108,7 @@ function dealSuggest() {
         if (req.readyState == 4 && req.status == 200) {
             // we're good to parse results   
             resp = req.responseText.trim();
-            console.log(resp);
+            //console.log(resp);
             deal_objects = JSON.parse(resp);
             deals = createDealHtml(deal_objects);
             footers = createDealFooters(deal_objects);
