@@ -74,31 +74,69 @@ function validateDate(input) {
 function getSuggest(type, input, e) {
     // some internal functions
     var div;
-    var spans;
     this.getSuggestSpans = function() {
         // get the spans if any and return them
+        var spans;
         div = document.getElementById('suggest_div');
-        var spans = div.getElementsByTagName('span');
+        spans = div.getElementsByTagName('span');
         return spans;
     };
     this.setHighlight = function(spans, lit, change) {
+        var pos;
         if (lit == undefined) {
             // we know it's the first highlight    
-            if (change == 1) {
+            if (change == -1) {
                 spans[spans.length - 1].className = 'highlight';
             }
-            if (change == -1) {
+            else if (change == 1) {
                 spans[0].className = 'highlight';
             }
         }
         else {
-            // remove the old highlight
             spans[lit].className = '';
-            // set the new highlight
-            spans[lit + change].className = 'highlight';
+            if (lit == 0 && change == -1) {
+                pos = (spans.length - 1);
+            }
+            else if (lit == (spans.length - 1) && change == 1) {
+                pos = 0;   
+            }
+            else {
+                pos = lit + change; 
+            }
+            spans[pos].className = 'highlight';
         }
     };
-    
+    if (document.getElementById('suggest_div') && e != undefined) {
+        // if there is a suggest div we should check for arrow key presses
+        // arrow keys are like this, left:37, up:38, right:39, down:40, we are only worried about 38 and 40, plus enter(13)
+        var lit, spans;
+        spans = this.getSuggestSpans();
+        for (var i = 0; i < spans.length; i++) {
+            if (spans[i].className == 'highlight') {
+                lit = i;
+            }
+        }
+        switch (e.keyCode) {
+            // determine how the box highlighting will shift
+            case 38:
+                // the user has presssed the up arrow
+                this.setHighlight(spans, lit, -1);
+                break;
+                
+            case 40:
+                // the user has pressed down
+                this.setHighlight(spans, lit, 1);
+                break;
+                
+            case 13:
+                // the user has pressed enter
+                input.value = spans[lit].innerHTML;
+                var div = document.getElementById('suggest_div');
+                div.parentNode.removeChild(div);
+                break;
+        }
+        return;
+    } // end of arrow handling
     // on to the function
     if (input.value.length < 3) {
          // too early for auto suggest yet
@@ -118,19 +156,20 @@ function getSuggest(type, input, e) {
                         div.innerHTML = "";
                     }
                     catch(e) {
-                        var div = document.createElement('div');
+                        div = document.createElement('div');
                         div.id = "suggest_div";
                     }
                     // build the html
                     var i;
                    // console.log(suggestion);
                     for (i = 0; i < suggestion.length; i++) {
+                        var span;
                         span = document.createElement('span');
                         span.innerHTML = suggestion[i];
                         span.onclick = function() {
                             input.value = this.innerHTML;
                             this.parentNode.parentNode.removeChild(this.parentNode);
-                        }
+                        };
                         div.appendChild(span);
                     }
                     input.parentElement.appendChild(div);
@@ -138,6 +177,7 @@ function getSuggest(type, input, e) {
             }
         }
     };
+    var url;
     switch(type) {
         case 'company_name':
             url = "php/get_companies.php?q=" + input.value;
@@ -149,37 +189,7 @@ function getSuggest(type, input, e) {
             break; 
     }
     req.open('GET', url, true);
-    req.send(null);   
-    if (document.getElementById('suggest_div') && e != undefined) {
-        // if there is a suggest div we should check for arrow key presses
-        // arrow keys are like this, left:37, up:38, right:39, down:40, we are only worried about 38 and 40, plus enter(13)
-        var lit;
-        spans = this.getSuggestSpans();
-        for (var i = 0; i < spans.length; i++) {
-            if (spans[i].className == 'highlight') {
-                lit = i;;   
-            }
-        }
-        switch (e.keyCode) {
-            // determine how the box highlighting will shift
-            case 38:
-                // the user has presssed the up arrow
-                console.log('up');
-                spans = this.setHighlight(spans, lit, 1);
-                break;
-                
-            case 40:
-                // the user has pressed down
-                console.log('down');
-                spans = this.setHighlight(spans, lit, -1);
-                break;
-                
-            case 13:
-                // the user has pressed enter
-                break;
-        }
-
-    } // end of arrow handling 
+    req.send(null);    
 }
 
 // seperate these into seperate modules, functions.js is getting too crowded
