@@ -71,7 +71,35 @@ function validateDate(input) {
     req.send(null);
 }
 
-function getSuggest(type, input) {
+function getSuggest(type, input, e) {
+    // some internal functions
+    var div;
+    var spans;
+    this.getSuggestSpans = function() {
+        // get the spans if any and return them
+        div = document.getElementById('suggest_div');
+        var spans = div.getElementsByTagName('span');
+        return spans;
+    };
+    this.setHighlight = function(spans, lit, change) {
+        if (lit == undefined) {
+            // we know it's the first highlight    
+            if (change == 1) {
+                spans[spans.length - 1].className = 'highlight';
+            }
+            if (change == -1) {
+                spans[0].className = 'highlight';
+            }
+        }
+        else {
+            // remove the old highlight
+            spans[lit].className = '';
+            // set the new highlight
+            spans[lit + change].className = 'highlight';
+        }
+    };
+    
+    // on to the function
     if (input.value.length < 3) {
          // too early for auto suggest yet
         return;
@@ -122,6 +150,36 @@ function getSuggest(type, input) {
     }
     req.open('GET', url, true);
     req.send(null);   
+    if (document.getElementById('suggest_div') && e != undefined) {
+        // if there is a suggest div we should check for arrow key presses
+        // arrow keys are like this, left:37, up:38, right:39, down:40, we are only worried about 38 and 40, plus enter(13)
+        var lit;
+        spans = this.getSuggestSpans();
+        for (var i = 0; i < spans.length; i++) {
+            if (spans[i].className == 'highlight') {
+                lit = i;;   
+            }
+        }
+        switch (e.keyCode) {
+            // determine how the box highlighting will shift
+            case 38:
+                // the user has presssed the up arrow
+                console.log('up');
+                spans = this.setHighlight(spans, lit, 1);
+                break;
+                
+            case 40:
+                // the user has pressed down
+                console.log('down');
+                spans = this.setHighlight(spans, lit, -1);
+                break;
+                
+            case 13:
+                // the user has pressed enter
+                break;
+        }
+
+    } // end of arrow handling 
 }
 
 // seperate these into seperate modules, functions.js is getting too crowded

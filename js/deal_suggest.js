@@ -8,7 +8,7 @@ function dealSuggest() {
         // make the HTML code for the deals 
         for (var i = 0; i < deal_objects.length; i++) {
             // iterate the deal objects and build some deals
-            // model the way it is built of deal.html
+            // model the way it is built off deal.html
             var container, title, title_link, info_container, byline, info_table, tr, price, end_info, text;
             // first the container
             container = document.createElement('div');

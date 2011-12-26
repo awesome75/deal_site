@@ -5,7 +5,7 @@
         </div>
         <div class="filters">
             <span>Company:</span><br />
-            <input type="text" name="company" onkeyup="getSuggest('company_name', this);" />
+            <input type="text" name="company" onkeyup="getSuggest('company_name', this, event); " />
         </div>
         <div class="filters">
             <span>Price:</span></br />
@@ -13,7 +13,7 @@
         </div>
         <div class="filters">
             <span>Type:</span><br />
-            <input type="text" name="type" onkeyup="getSuggest('type_filter', this);" />
+            <input type="text" name="type" onkeyup="getSuggest('type_filter', this, event);" />
         </div>
         <div class="filters" style="text-align: center; width:85%;">
             <input type="button" value="Go" style="width: 40%;min-width:75px;" onClick="dealSuggest()" />
