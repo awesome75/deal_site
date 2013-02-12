@@ -323,7 +323,7 @@ function addDealInput(name, type, val) {
         switch (input.name) {
             // we handle error checking different by field obviously
             case 'company':
-                getSuggest('company_name', input);
+                getSuggest('company_name', input, event);
                 break;
             
             // this will handle onkeyup for price

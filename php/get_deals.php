@@ -8,9 +8,9 @@ require_once('classes.php'); // gonna need that deal class
 $con = getSQLConnection('deal_site'); // $con has our DB reference 
 // go on to getting the deals and populating them into a class so we can use this script anywhere on site
 /*
-    $sql = "SELECT * FROM `deals` ORDER BY `deal_post_date` DESC"; // grab our deals
-    We don't need this anymore, getDeals() will defin the SQL for us, this script just retrieves
-    the deals ands stores them in memory
+    * $sql = "SELECT * FROM `deals` ORDER BY `deal_post_date` DESC"; // grab our deals
+    * We don't need this anymore, getDeals() will defin the SQL for us, this script just retrieves
+    * the deals ands stores them in memory
 */
 $res = mysql_query($sql, $con);
 $ctrl = 0; // loop counter
@@ -37,6 +37,7 @@ while ($row = mysql_fetch_array($res)) {
     $current -> algo_rank = $row['algo_ranking'];
     $current -> thanks_count = $row['thanks_count'];
     $current -> active = $row['deal_active'];
+    $current->distance = $row['distance'];
     // now that the deal object is done store a reference
     $deals[$ctrl] = $current;
     // increment index and continue

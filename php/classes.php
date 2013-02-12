@@ -27,6 +27,7 @@ class deal {
     var $algo_rank;
     var $thanks_count;
     var $active;
+    var $distance;
     // that is all the properties we will need.. FOR NOW!!!
     // now we need to define the methods IE what the deal object is capable of
     
@@ -384,7 +385,6 @@ class tag {
 
 
 ?>
-
 
 
 

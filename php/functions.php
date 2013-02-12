@@ -151,7 +151,52 @@ function getUser($user_id) {
     return $user;
 }
 
-function getDeals($deal_id=null,$tag=null,$location=null,$company=null) {   
+function getDeals($params = null) { // allow optional
+  /*
+    * getDeals does most of the heavy lifting for deal searches.
+    * we will use the parameter input on the function to construct a query
+  */
+  // check each potential param, and allow it to be added to a query
+  //echo "params: ";
+  //die(var_dump($params));
+  if ($params['location']) {
+    // first, we need to turn this location into a coord plot
+    $com = "python ../python/location_tools.py geocode '" . $params['location'] . "'";
+    $coords = system($com);
+    // now split it to lat and long
+    $coords = explode(',', $coords);
+    $lat = $coords[0];
+    $long = $coords[1];
+    // now we can use them in a query
+    $loc = ",
+      ( 3959 * acos( cos( radians($lat) ) * cos( radians( deal_latitude ) ) 
+      * cos( radians( deal_longitude ) - radians($long) ) + sin( radians($lat) ) 
+      * sin( radians( deal_latitude ) ) ) ) AS distance 
+    ";
+    
+  }
+  if ($params['company'])
+    $clause .= "AND `company_id` = " . $params['company'];
+  if ($params['type']) 
+    $a = 1; // don't fix until we figure out new tag schemes
+  if ($params['price'])
+    $clause .= "AND `deal_price` < " . $params['price'];
+  // special one for if there is location
+  if ($params['location'])
+    $clause .= "HAVING distance < 10";
+  $sql = "
+    SELECT * $loc
+    FROM `deals`
+    WHERE 1=1
+    $clause
+  ";
+  // final steps, include get_deals only after return from function
+  // it will query whatever var $sql is, and instantiate deal objects from it
+  include('get_deals.php');
+  return $deals; // return the deals to the script
+}
+
+function getDeals_old($deal_id=null,$tag=null,$location=null,$company=null) {   
     // this function is what will retrieve deals for the various areas of the site
     // we need to build a query with the desired result and include get_deals.php
     // which will return the desired deals in array $deals
@@ -182,11 +227,35 @@ function getDeals($deal_id=null,$tag=null,$location=null,$company=null) {
     }
     
     // just grabbing some deals by location
-    else if ($tag == null && $location != null && $company == null && $price == null) {
-        $sql = "SELECT * FROM `deals` WHERE ??";
-        // need to find a way to quickly get and compare the query
-        // to the deal locations. how to do this in a scalable way, I have no idea
-        // will need much more research into this function
+    else if ($tag == null && $location && $company == null && $price == null) {
+      /* 
+        * we will use the haversine formula for this search. The formula will need the
+        * current coordindates of the origin of the request, ie the location of the 
+        * person searching, or a defined point on the map. We will also need the coords
+        * of the deal, which we are already storing in the db
+      */
+      /******************** MODEL *********************************
+        // Closest within radius of 25 Miles
+        // 37, -122 are your current coordinates
+        // To search by kilometers instead of miles, replace 3959 with 6371
+        SELECT feature_name, 
+         ( 3959 * acos( cos( radians(37) ) * cos( radians( lat ) ) 
+          * cos( radians( long ) - radians(-122) ) + sin( radians(37) ) 
+          * sin( radians( lat ) ) ) ) AS distance 
+        FROM geo_features HAVING distance < 25 
+        ORDER BY distance LIMIT 1;
+      */
+      // we will need to turn the passed 'location' into coords.
+      // luckily we have just the script for that
+      echo "dfsfsd";
+      $sql = "
+        SELECT *,
+          ( 3959 * acos( cos( radians(37) ) * cos( radians( deal_latitude ) ) 
+          * cos( radians( deal_longitude ) - radians(-122) ) + sin( radians(37) ) 
+          * sin( radians( deal_latitude ) ) ) ) AS distance 
+        FROM `deals`
+        ORDER BY distance
+      "; // ah yeah son, haversine in this bitch
     }
     
     // only getting deals by company

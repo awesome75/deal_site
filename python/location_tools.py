@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Script to retrieve places from the google places API, we will use these for "venues"
-# Places API key is AIzaSyCwQN5dwVIEPE0-67GP-xfX6Dccpqmagfo
+# Places API key is AIzaSyCwQN5dwVIEPE0-67GP-xfX6Dccpqmagfo y'all
 
 from urllib import urlopen;
 from json import loads as jsonloads;

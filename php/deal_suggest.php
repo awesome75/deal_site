@@ -24,24 +24,25 @@ class deal_suggest {
                 die();
             }
             while ($row = mysql_fetch_array($res)) {
-                $this->company = $row['company_id'];   
+              $this->company = $row['company_id'];   
             }
             mysql_close($con);
         }
         // now we know we have a company id and can move on
-        if ($this->company != "" && $this->price == "" && $this->type == "") {
-            // we are going company only
-            $this->deals = getDeals(null, null, null, $this->company);
-        }
-        else if ($this->company == "" && $this->price == "" && $this->type != "") {
-            $this->deals = getDeals(null, $this->type, null, null);
-        }
-        
-        else {
-            // we had problem determining the query type
-            return 0;
-        }
-        // now let's see if our result means anything
+        // we need to determine the params to use
+        //die(var_dump($this));
+        $params = array();
+        if ($this->location)
+          $params['location'] = $this->location;
+        if ($this->company)
+          $params['company'] = $this->company;
+        if ($this->price)
+          $params['price'] = $this->price;
+        if ($this->type)
+          $params['type'] = $this->type;
+        // send it to the function
+        $this->deals = getDeals($params);
+				// now let's see if our result means anything
         if (is_array($this->deals)) {
             // this means we made great success
             return 1;

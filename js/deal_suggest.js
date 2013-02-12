@@ -94,21 +94,13 @@ function dealSuggest() {
     price = document.getElementsByName('price_filter')[0].value.trim();   
     type = document.getElementsByName('type')[0].value.trim();
     var url = "php/deal_suggest.php";
-    // now we go through each one and see what ones were defined
-    if (company != "" && location == "" && price == "" && type == "") {
-        // we will do a company suggest for the deals  
-        url += "?company=" + company + "&location=&price=&type=";
-    }
-    else if (company == "" && location == "" && price == "" && type != "") {
-        // just get deals by tag with AJAX
-        url += "?company=&location=&price=&type=" + type;
-    }
+    url += "?company=" + company + "&location=" + location + "&price=" + price + "&type=" + type;
     // create the listener for the request
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200) {
             // we're good to parse results   
             resp = req.responseText.trim();
-            //console.log(resp);
+            console.log(resp);
             deal_objects = JSON.parse(resp);
             deals = createDealHtml(deal_objects);
             footers = createDealFooters(deal_objects);

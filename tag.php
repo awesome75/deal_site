@@ -4,7 +4,7 @@
         This script is already marked for deletion since we can build tag retrieval 
         into the current index.php page with much less code. We'll keep it around though
         in case I decide the features are better being seperate scripts instead of a single
-        view with different controllers
+        view with different controllers. should replace with tags of JSON on deals table
 */
 // tags.php script for deals site, this script will retrieve deals with tags that match $_GET['tag']
 require_once('php/classes.php'); // get our classes and functions
