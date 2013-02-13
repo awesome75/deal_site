@@ -161,8 +161,8 @@ function getDeals($params = null) { // allow optional
   //die(var_dump($params));
   if ($params['location']) {
     // first, we need to turn this location into a coord plot
-    $com = "python ../python/location_tools.py geocode '" . $params['location'] . "'";
-    $coords = system($com);
+    $com = "python ../python/location_tools.py geocode '" . escapeshellarg($params['location']) . "'";
+    $coords = exec($com);
     // now split it to lat and long
     $coords = explode(',', $coords);
     $lat = $coords[0];
@@ -177,13 +177,25 @@ function getDeals($params = null) { // allow optional
   }
   if ($params['company'])
     $clause .= "AND `company_id` = " . $params['company'];
-  if ($params['type']) 
-    $a = 1; // don't fix until we figure out new tag schemes
+  if ($params['type']) {
+    // messy solution for now, fuck it
+    $sql = "
+      SELECT `tag_id` 
+      FROM `deal_tags`
+      WHERE `tag_text` = '" . $params['type'] . "'
+    ";
+    $res = mysql_query($sql);
+    $tag_id = mysql_result($res, 0);
+    // now clause it 
+    $clause .= "AND `deal_tags` LIKE '%," . $tag_id . ",%'";
+    $clause .= " OR `deal_tags` LIKE '" . $tag_id . ",%'";
+    $clause .= " OR `deal_tags` LIKE '%," . $tag_id . "'";
+  }
   if ($params['price'])
     $clause .= "AND `deal_price` < " . $params['price'];
   // special one for if there is location
   if ($params['location'])
-    $clause .= "HAVING distance < 10";
+    $clause .= "HAVING distance < 10"; // adjust distance as needed
   $sql = "
     SELECT * $loc
     FROM `deals`
