@@ -161,6 +161,13 @@ class user {
             $this -> cell_carrier = $row['cell_carrier'];
             $this -> cell_number = $row['cell_number'];
         }
+        // update last login real quick
+        $sql = "
+          UPDATE `users`
+          SET `last_login` = NOW()
+          WHERE `user_id` = $this->user_id
+        ";
+        mysql_query($sql, $con);
         return 1;
         // close our mysql connection
         mysql_close($con);
