@@ -196,6 +196,9 @@ function getDeals($params = null) { // allow optional
   // special one for if there is location
   if ($params['location'])
     $clause .= "HAVING distance < 10"; // adjust distance as needed
+  // of course, if we have a deal id, all this is ignored
+  if ($params['id'])
+    $clause = "AND `deal_id` = " . $params['id'];
   $sql = "
     SELECT * $loc
     FROM `deals`

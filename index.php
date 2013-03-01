@@ -48,7 +48,7 @@ if ($tag) {
 }
 
 else if ($_GET['deal_id']) {
-    $deals = getDeals(filterID($_GET['deal_id']), null, null, null);
+    $deals = getDeals(array('id' => filterID($_GET['deal_id'])));
 }
 
 else {
