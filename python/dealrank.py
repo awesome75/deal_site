@@ -12,7 +12,6 @@
 from math import sqrt;
 import MySQLdb as mysql;
 
-
 class DealRank:
   def __init__(self, deal_id, con):
     # the constructor needs to grab the dataz
@@ -31,16 +30,33 @@ class DealRank:
     res = cur.fetchall();
     for row in res:
       # the row object can be used with named indexes, eg row['deal_views']
-      
-    # this concludes our constructor method
+      self.findRank(row);
+      # this concludes our constructor method
   
-  def findRank(self):
+  def findRank(self, row):
     # do the heavy lifting
-    a = 1;
-    
-  def updateRank(self):
+    # first, for convenience, assign the variables
+    verified = True if row['deal_verified'] == 1 else False; # python has odd ternary
+    thanks = int(row['thanks_count']);
+    thumbs = int(row['deal_thumbs_up'] - row['deal_thumbs_down']); # thumbs is the net up/down
+    views = int(row['deal_views']);
+    # now change the verified so a deal that is not verified has only half rank
+    verified = 1 if verified == True else 0.5;
+    # apply a very simple ranking algo
+    pop = ((thanks + thumbs + views) * verified) / 2; 
+    # now we will update the rank in the DB
+    self.updateRank(pop);
+
+  def updateRank(self, pop):
     # update the deal with its new rank
-    a = 1;
+    # we will probably want a query to work with XD
+    sql = " \
+      UPDATE `deals` \
+      SET `algo_ranking` = %d \
+      WHERE `deal_id` = %d \
+    " % (pop, self.deal_id);
+    cur = self.con.cursor();
+    cur.execute(sql);
 
 
 class DB:
