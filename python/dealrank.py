@@ -6,12 +6,15 @@
 # should be ran every time an indicator changes for a deal in the DB
 ################################################################################
 # TODO:
-  # probably write it
+  # make algorithm take into account record age
+  # make algorithm weigh the indicators, as of now it just blindly uses them
+  # make algorithm take into account comments
+  # look into fancier ranking, perhaps bayesian is best here. Thoughts, Jon?
 ################################################################################
 
-from math import sqrt;
+#from math import sqrt; # basic algo doesn't need this yet
 import MySQLdb as mysql;
-from sys in argv;
+from sys import argv;
 
 class DealRank:
   def __init__(self, deal_id, con):
@@ -67,4 +70,4 @@ class DB:
 # this script for now will only ever be ran from the command line 
 deal_id = argv[1];
 con = DB('localhost', 'root', '8ac0n90', 'deal_site');
-DealRank(deal_id, con.con);
+DealRank(int(deal_id), con.con);
