@@ -11,6 +11,7 @@
 
 from math import sqrt;
 import MySQLdb as mysql;
+from sys in argv;
 
 class DealRank:
   def __init__(self, deal_id, con):
@@ -62,7 +63,8 @@ class DealRank:
 class DB:
   def __init__(self, host, user, passwd, db):
     self.con = mysql.connect(host=host, user=user, passwd=passwd, db=db);
-  
 
+# this script for now will only ever be ran from the command line 
+deal_id = argv[1];
 con = DB('localhost', 'root', '8ac0n90', 'deal_site');
-DealRank(1, con.con);
+DealRank(deal_id, con.con);
